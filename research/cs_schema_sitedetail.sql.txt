@@ -1,0 +1,21 @@
+SELECT name FROM sysindexes WHERE name = 'idx_acct_no'
+
+SELECT name, * FROM sysindexes WHERE name = 'idx_site_detail3'
+
+SELECT name, * FROM sys.indexes WHERE name = 'idx_site_detail3' AND object_id = OBJECT_ID('dbo.site_detail')
+
+IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = 'idx_site_detail3' AND object_id = OBJECT_ID('dbo.site_detail'))
+	CREATE NONCLUSTERED INDEX [idx_site_detail3] ON [dbo].[site_detail]
+	(
+		[easting] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+
+IF NOT EXISTS (SELECT name FROM sys.indexes WHERE name = 'idx_site_detail4' AND object_id = OBJECT_ID('dbo.site_detail'))
+	CREATE NONCLUSTERED INDEX [idx_site_detail4] ON [dbo].[site_detail]
+	(
+		[northing] ASC
+	)
+	WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO

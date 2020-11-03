@@ -1,0 +1,29 @@
+set datefirst 1;
+print str( datepart(dw, '2013-01-27') )
+print str( datepart(dw, '2013-01-27 12:17:00.000') )
+
+select * from modulelic
+order by keyname desc
+
+declare @test integer
+SET @test = dbo.cs_modulelic_getInstalled('WB')
+print str(@test)
+
+
+DECLARE @Counter INT
+SET @Counter = 0
+WHILE (1 = 1)
+   BEGIN
+      SET @Counter = @Counter + 1
+      IF @Counter <= 3
+         PRINT 'The counter : ' + CAST(@Counter AS CHAR)
+      ELSE IF @Counter > 3 AND @Counter <= 13
+         BEGIN
+            PRINT 'No Counter Here'
+            CONTINUE
+		 END
+      ELSE IF @Counter > 13 AND @Counter < 20
+         BREAK
+      ELSE
+         PRINT 'The counter : ' + CAST(@Counter AS CHAR)
+   END

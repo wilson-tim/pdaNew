@@ -1,0 +1,34 @@
+USE welshdata;
+EXECUTE dbo.cs_site_getLocalProperties 278891.00, 187038.20, 150
+
+EXECUTE dbo.cs_site_getLocalStreets 278891.00, 187038.20, 150
+
+
+execute dbo.cs_site_searchProperties 'sa13', '', '', ''
+execute dbo.cs_site_searchProperties '', '', '', 'bertha'
+execute dbo.cs_site_searchProperties 'sa13', '', '', 'morf'
+execute dbo.cs_site_searchProperties 'sa13', '', '', 'mrof'
+
+execute dbo.cs_site_searchStreets 'sa13', '', '', ''
+execute dbo.cs_site_searchStreets 'sa13', '', '', 'morf'
+
+-- 28/01/2013
+
+select *
+FROM cs_comp_viewHistory
+
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+
+execute dbo.cs_site_getLocalProperties 278792.00, 187044.00, 400
+execute dbo.cs_site_getLocalStreets 278792.00, 187044.00, 400
+
+execute dbo.cs_site_searchProperties 'SA13', '', '', ''
+execute dbo.cs_site_searchStreets 'SA13', '', '', ''
+
+
+
+
+
+

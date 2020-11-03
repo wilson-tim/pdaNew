@@ -1,0 +1,18 @@
+-- 15/03/2013
+
+declare @min_age integer
+	,@testdate datetime
+	,@maxdob datetime
+
+set @min_age = 20
+
+set @testdate = CONVERT(datetime, CONVERT(date, GETDATE()))
+set @testdate = CONVERT(datetime, CONVERT(date, CAST('2013-01-01' AS datetime)))
+
+set @maxdob = DATEADD(year, -@min_age, @testdate)
+
+set @maxdob = DATEADD(day, -1, @maxdob)
+
+print LTRIM(RTRIM(CONVERT(varchar(10), @maxdob, 103)))
+
+

@@ -1,0 +1,157 @@
+	SELECT std_cv,
+		std_pnts,
+		std_val,
+		fr_v_flag,
+		fr_p_flag,
+		d_u_o_m_flag,
+		d_ta_r_flag,
+		multip_v_flag,
+		multip_p_flag,
+		si_i_vol,
+		fr_v,
+		fr_p,
+		d_u_o_m,
+		d_ta_r,
+		rounding,
+		multip_v,
+		multip_p,
+		ta_r.task_rate,
+		task.unit_of_meas
+		FROM defp3
+		INNER JOIN item
+		ON item.item_ref = 'BROWN-BIN'
+			AND item.contract_ref = 'REF'
+		INNER JOIN task
+		ON task.task_ref = item.task_ref
+		INNER JOIN c_da
+		ON c_da.contract_ref = 'REF'
+			AND c_da.period_start <= GETDATE()
+			AND c_da.period_finish <= GETDATE()
+		INNER JOIN ta_r
+		ON ta_r.task_ref = item.task_ref
+			AND ta_r.contract_ref = 'REF'
+			AND ta_r.cont_cycle_no = c_da.cont_cycle_no
+			AND ta_r.[start_date] <= GETDATE()
+		WHERE calc_id =
+			(
+			SELECT calc_id
+				FROM defp1
+				WHERE [algorithm] = 'REF_DOM'
+					AND contract_ref = 'REF'
+					AND item_type = 'REF'
+					AND [priority] = 'A'
+					AND default_level = 1
+			);
+
+select * from item order by item_ref
+select * from defp1 order by algorithm
+
+
+	SELECT std_cv,
+		std_pnts,
+		std_val,
+		fr_v_flag,
+		fr_p_flag,
+		d_u_o_m_flag,
+		d_ta_r_flag,
+		multip_v_flag,
+		multip_p_flag,
+		si_i_vol,
+		fr_v,
+		fr_p,
+		d_u_o_m,
+		d_ta_r,
+		rounding,
+		multip_v,
+		multip_p,
+		(select unit_of_meas from task where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')) AS unit_of_meas,
+
+		ISNULL((select top (1) task_rate
+          from ta_r
+          where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')
+          and   contract_ref = 'REF'
+          and   cont_cycle_no = (select cont_cycle_no from c_da where contract_ref = 'REF' and period_start <= GETDATE() and period_finish >= GETDATE())
+          and   start_date <= GETDATE()
+          order by start_date desc), 1.0) AS task_rate
+
+
+		FROM defp3
+		WHERE calc_id =
+			(
+			SELECT calc_id
+				FROM defp1
+				WHERE [algorithm] = 'REF_DOM'
+					AND contract_ref = 'REF'
+					AND item_type = 'REF'
+					AND [priority] = 'A'
+					AND default_level = 1
+			);
+
+
+
+	SELECT std_cv,
+		std_pnts,
+		std_val,
+		fr_v_flag,
+		fr_p_flag,
+		d_u_o_m_flag,
+		d_ta_r_flag,
+		multip_v_flag,
+		multip_p_flag,
+		si_i_vol,
+		fr_v,
+		fr_p,
+		d_u_o_m,
+		d_ta_r,
+		rounding,
+		multip_v,
+		multip_p,
+
+--		(select unit_of_meas from task where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')) AS unit_of_meas,
+--		(select unit_of_meas from task where task_ref = item.task_ref) AS unit_of_meas,
+		task.unit_of_meas,
+
+		ISNULL((select top (1) task_rate
+          from ta_r
+--          where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')
+          where ta_r.task_ref = item.task_ref
+          and   contract_ref = 'REF'
+          and   cont_cycle_no = (select cont_cycle_no from c_da where contract_ref = 'REF' and period_start <= GETDATE() and period_finish >= GETDATE())
+          and   start_date <= GETDATE()
+		  and   rate_band_code = 'BUY'
+          order by start_date desc), 1.0) AS task_rate,
+
+		NULL as [start_date]
+
+		FROM defp3
+		INNER JOIN defp1
+		ON defp1.calc_id = defp3.calc_id
+			AND defp1.[algorithm] = 'REF_DOM'
+			AND defp1.contract_ref = 'REF'
+			AND defp1.item_type = 'REF'
+			AND defp1.[priority] = 'A'
+			AND defp1.default_level = 1
+		LEFT OUTER JOIN item
+		ON item.item_ref = 'BROWN-BIN'
+			and item.contract_ref = 'REF'
+		LEFT OUTER JOIN task
+		ON task.task_ref = item.task_ref
+
+
+
+select *
+          from ta_r
+          where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')
+          and   contract_ref = 'REF'
+          and   cont_cycle_no = (select cont_cycle_no from c_da where contract_ref = 'REF' and period_start <= GETDATE() and period_finish >= GETDATE())
+          and   start_date <= GETDATE()
+		  and   rate_band_code = 'BUY'
+          order by start_date desc
+
+update ta_r
+set task_rate = 6.66
+          where task_ref = (select task_ref from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF')
+          and   contract_ref = 'REF'
+          and   cont_cycle_no = (select cont_cycle_no from c_da where contract_ref = 'REF' and period_start <= GETDATE() and period_finish >= GETDATE())
+          and   start_date > '2007-01-01'
+		  and   rate_band_code = 'BUY'

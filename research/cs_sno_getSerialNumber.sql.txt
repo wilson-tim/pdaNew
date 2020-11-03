@@ -1,0 +1,20 @@
+declare @test table(old_s_no integer)
+
+update s_no
+	set serial_no = serial_no + 1
+	output deleted.serial_no into @test
+	where sn_func = 'trader'
+		and contract_ref IS NULL
+
+select * from @test
+if @@rowcount < 1
+	print 'hello'
+
+
+
+declare @serial_no integer
+execute dbo.cs_sno_getSerialNumber 'trader', NULL, @serial_no OUTPUT
+print str(@serial_no)
+
+
+select * from s_no where sn_func = 'trader' and contract_ref IS NULL

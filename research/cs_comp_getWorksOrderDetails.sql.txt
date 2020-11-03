@@ -1,0 +1,113 @@
+select dest_ref, dest_suffix, * from comp where action_flag='W' and date_closed is null
+and complaint_no=178
+
+-- dest_ref = 8
+-- dest_suffix = 'SC'
+
+select * from wo_h
+where wo_ref = 8
+and wo_suffix = 'SC'
+
+select * from wo_i
+where wo_ref = 8
+and wo_suffix = 'SC'
+
+
+
+select
+wo_h.wo_ref
+,wo_h.wo_suffix
+,wo_h.service_c
+,(SELECT TOP(1) pda_lookup.service_c_desc FROM pda_lookup WHERE pda_lookup.service_c = wo_h.service_c AND pda_lookup.role_name = 'pda-in') AS service_c_desc
+,wo_h.wo_h_stat
+,(SELECT wo_stat_desc FROM wo_stat WHERE wo_h_stat = wo_h.wo_h_stat) AS wo_h_stat_desc
+,DATEADD(minute, CAST(ISNULL(wo_h.time_raised_m, 0) AS integer),
+				DATEADD(hour,   CAST(ISNULL(wo_h.time_raised_h, 0) AS integer),
+				DATEADD(day,    DATEPART(day,   wo_h.date_raised) - 1, 
+				DATEADD(month,  DATEPART(month, wo_h.date_raised) - 1, 
+				DATEADD(year,   DATEPART(year,  wo_h.date_raised) - 1900, 0))))) AS date_raised
+,DATEADD(minute, CAST(ISNULL(wo_h.expected_time_m, 0) AS integer),
+				DATEADD(hour,   CAST(ISNULL(wo_h.expected_time_h, 0) AS integer),
+				DATEADD(day,    DATEPART(day,   wo_h.wo_date_due) - 1, 
+				DATEADD(month,  DATEPART(month, wo_h.wo_date_due) - 1, 
+				DATEADD(year,   DATEPART(year,  wo_h.wo_date_due) - 1900, 0))))) AS date_due
+,wo_h.del_comp_name AS business_name
+,wo_h.del_contact AS contact_name
+,wo_h.del_phone AS contact_phone
+,comp.exact_location
+,wo_cont_h.cont_rem1 AS contractor_reminders_1
+,wo_cont_h.cont_rem2 AS contractor_reminders_2
+from comp
+inner join wo_h
+on wo_h.wo_ref = comp.dest_ref
+	and wo_h.wo_suffix = comp.dest_suffix
+left outer join wo_cont_h
+on wo_cont_h.wo_ref = wo_h.wo_ref
+	and wo_cont_h.wo_suffix = wo_h.wo_suffix
+--where complaint_no=178
+--where complaint_no=5096
+where complaint_no=380006
+
+
+
+select
+comp.complaint_no
+,comp.dest_ref
+,comp.dest_suffix
+,wo_i.woi_serial_no
+,wo_i.woi_task_ref AS task_ref
+,task.task_desc
+,wo_i.woi_volume AS volume
+,(SELECT task_rate
+                      FROM ta_r
+                     WHERE task_ref = wo_i.woi_task_ref
+                       AND contract_ref = wo_h.contract_ref
+                       AND rate_band_code = 'BUY'
+                       AND cont_cycle_no = c_da.cont_cycle_no
+                       AND start_date = (
+                       SELECT MAX(start_date)
+                         FROM ta_r
+                        WHERE task_ref = wo_i.woi_task_ref
+                          AND contract_ref = wo_h.contract_ref
+                          AND rate_band_code = 'BUY'
+                          AND cont_cycle_no = c_da.cont_cycle_no
+                          AND start_date < GETDATE())
+					  ) AS task_rate
+,task.unit_of_meas AS unit_of_measure
+from comp
+inner join wo_h
+on wo_h.wo_ref = comp.dest_ref
+	and wo_h.wo_suffix = comp.dest_suffix
+inner join wo_i
+on wo_i.wo_ref = comp.dest_ref
+	and wo_i.wo_suffix = comp.dest_suffix
+inner join task
+ON task.task_ref = wo_i.woi_task_ref
+inner join c_da
+on c_da.contract_ref = wo_h.contract_ref
+								AND period_start <= GETDATE()
+								AND period_finish >= GETDATE()
+--where complaint_no = 5096
+--where complaint_no = 262
+--where complaint_no = 380006
+where complaint_no = 169
+
+--where action_flag = 'W' and date_closed is null
+--order by complaint_no desc, dest_ref, wo_i.woi_serial_no
+
+
+
+select * from comp where dest_ref=14 and dest_suffix='TRADE'
+
+
+select wo_ref, wo_suffix, count(*) from wo_i group by wo_ref, wo_suffix
+order by 3 desc
+select * from comp where dest_ref=2432 and dest_suffix='AV'
+
+
+
+-- Welshdata
+execute dbo.cs_comp_getWorksOrderDetails 169
+execute dbo.cs_comp_getWorksOrderTaskDetails 169
+
+select dest_ref, dest_suffix, * from comp where action_flag='W' and date_closed is null order by date_entered desc

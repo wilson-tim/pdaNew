@@ -1,0 +1,69 @@
+/*
+** @site_ref      = site reference
+** @item_ref      = item reference
+** @feature_ref   = feature reference
+** @contract_ref  = contract reference
+** @priority_flag = priority flag
+** @comp_code     = fault code
+** @level         = rectification level
+*/
+
+declare @test integer;
+execute @test = dbo.cs_defa_checkAlgorithms '600388', 'BROWN-BIN', 'REF_DOM', 'REF', 'A', 'R01', 1;
+print str(@test);
+
+
+
+execute dbo.cs_defa_getAlgorithms 'BROWN-BIN', 'REF', 'A', 'R01', 1;
+
+execute dbo.cs_defp4_getParams 'REF_DOM', 'BROWN-BIN', 'REF', 'A', 1;
+
+select * from item where item_ref = 'BROWN-BIN' and contract_ref = 'REF';
+select * from si_i where item_ref = 'BROWN-BIN'
+
+SELECT defp1.cb_time_id
+				FROM defp1
+				WHERE RTRIM(LTRIM(defp1.[algorithm])) = 'REF_DOM'
+					AND RTRIM(LTRIM(defp1.contract_ref)) = 'REF'
+					AND defp1.item_type = 'REF'
+					AND RTRIM(LTRIM(defp1.[priority])) = 'A'
+					AND defp1.default_level = 1;
+
+select * from defp4 where cb_time_id=4
+
+SELECT defp4.time_delay,
+		defp4.report_by_hrs1,
+		defp4.report_by_mins1,
+		defp4.report_by_hrs2,
+		defp4.report_by_mins2,
+		defp4.report_by_hrs3,
+		defp4.report_by_mins3,
+		defp4.correct_by_hrs1,
+		defp4.correct_by_mins1,
+		defp4.correct_by_hrs2,
+		defp4.correct_by_mins2,
+		defp4.correct_by_hrs3,
+		defp4.correct_by_mins3,
+		defp4.working_week,
+		defp4.clock_start_hrs,
+		defp4.clock_start_mins,
+		defp4.clock_stop_hrs,
+		defp4.clock_stop_mins,
+		defp4.cut_off_hrs,
+		defp4.cut_off_mins
+		FROM defp4
+		INNER JOIN item
+		ON RTRIM(LTRIM(item.item_ref)) = 'BROWN-BIN'
+			AND RTRIM(LTRIM(item.contract_ref)) = 'REF'
+		WHERE defp4.cb_time_id =
+			(
+			SELECT defp1.cb_time_id
+				FROM defp1
+				WHERE RTRIM(LTRIM(defp1.[algorithm])) = 'REF_DOM'
+					AND RTRIM(LTRIM(defp1.contract_ref)) = 'REF'
+					AND defp1.item_type = 'REF'
+					AND RTRIM(LTRIM(defp1.[priority])) = 'A'
+					AND defp1.default_level = 1
+			);
+
+

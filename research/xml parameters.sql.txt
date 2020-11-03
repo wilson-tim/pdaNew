@@ -1,0 +1,141 @@
+select complaint_no from comp where complaint_no=500
+
+select * from wo_i
+select * from wo_h
+	where wo_suffix='REF'
+
+
+DECLARE @idoc integer,
+	@xdoc varchar(500);
+SET @xdoc = '<woh><wohrow complaint_no="573" wo_contract_ref="REF" wo_suffix="REF" wo_type_f="A" wo_date_due="2009-10-07" /></woh>';
+
+EXEC sp_xml_preparedocument @idoc OUTPUT, @xdoc;
+SELECT *
+	FROM OPENXML (@idoc, '/woh/wohrow', 1)
+	WITH
+		(
+		complaint_no integer,
+		wo_contract_ref varchar(12),
+		wo_suffix varchar(6),
+		wo_type_f varchar(2),
+		wo_date_due datetime
+		);
+
+
+DECLARE @idoc integer,
+	@xdoc varchar(500);
+SET @xdoc = '<woi>';
+SET @xdoc = @xdoc + '<woirow task_ref="REF_DEL_240" task_price="5.50" task_quantity="2.00" />';
+SET @xdoc = @xdoc + '<woirow task_ref="REF_COL_240" task_price="0.00" task_quantity="1.00" />';
+SET @xdoc = @xdoc + '</woi>';
+
+EXEC sp_xml_preparedocument @idoc OUTPUT, @xdoc;
+SELECT *
+	FROM OPENXML (@idoc, '/woi/woirow', 1)
+	WITH
+		(
+		task_ref varchar(12),
+		task_price decimal(15,8),
+		task_quantity decimal(11,3)
+		);
+
+
+	/* Create temporary table */
+	DECLARE @xdoc xml,
+		@errortext varchar(100);
+
+	SET @xdoc =
+		'<ArrayOfWorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67890</SiteRef>
+			<Volume>1.99</Volume>
+		  </WorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67891</SiteRef>
+			<Volume>2.99</Volume>
+		  </WorkOrderCoreIDTO>
+		</ArrayOfWorkOrderCoreIDTO>';
+
+	IF OBJECT_ID('tempdb..#tempTable') IS NOT NULL
+	BEGIN
+		DROP TABLE  #tempTable
+	END
+
+	SELECT
+		test.value('SiteRef[1]','varchar(16)') AS 'site_ref',
+		test.value('Volume[1]','decimal(8,2)') AS 'volume'
+		INTO #tempTable
+		FROM @xdoc.nodes('/ArrayOfWorkOrderCoreIDTO/WorkOrderCoreIDTO') AS xdoc(test)
+
+	SELECT * FROM #tempTable
+
+
+	/* Create temporary table */
+	DECLARE @xdoc xml,
+		@errortext varchar(100),
+		@site_ref varchar(16);
+
+	SET @xdoc =
+		'<ArrayOfWorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67890</SiteRef>
+			<Volume>1.99</Volume>
+		  </WorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67891</SiteRef>
+			<Volume>2.99</Volume>
+		  </WorkOrderCoreIDTO>
+		</ArrayOfWorkOrderCoreIDTO>';
+
+	IF OBJECT_ID('tempdb..#tempTable') IS NOT NULL
+	BEGIN
+		DROP TABLE  #tempTable
+	END
+
+	SELECT
+		test.value('SiteRef[1]','varchar(16)') AS 'site_ref',
+		test.value('Volume[1]','decimal(8,2)') AS 'volume'
+		INTO #tempTable
+		FROM @xdoc.nodes('/ArrayOfWorkOrderCoreIDTO/WorkOrderCoreIDTO') AS xdoc(test)
+
+	SELECT @site_ref = site_ref
+		FROM #tempTable
+
+	PRINT @site_ref
+
+
+	/* Create temporary table */
+	DECLARE @xdoc xml,
+		@errortext varchar(100),
+		@xdocout xml;
+
+	SET @xdoc =
+		'<ArrayOfWorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67890</SiteRef>
+			<Volume>1.99</Volume>
+		  </WorkOrderCoreIDTO>
+		  <WorkOrderCoreIDTO>
+			<SiteRef>67891</SiteRef>
+			<Volume>2.99</Volume>
+		  </WorkOrderCoreIDTO>
+		</ArrayOfWorkOrderCoreIDTO>';
+
+	IF OBJECT_ID('tempdb..#tempTable') IS NOT NULL
+	BEGIN
+		DROP TABLE  #tempTable
+	END
+
+	SELECT
+		test.value('SiteRef[1]','varchar(16)') AS 'site_ref',
+		test.value('Volume[1]','decimal(8,2)') AS 'volume'
+		INTO #tempTable
+		FROM @xdoc.nodes('/ArrayOfWorkOrderCoreIDTO/WorkOrderCoreIDTO') AS xdoc(test)
+
+	SELECT site_ref, volume FROM #tempTable
+
+--	SET @xdocout = (SELECT * FROM #tempTable FOR XML AUTO, TYPE)
+--	SET @xdocout = (SELECT * FROM #tempTable FOR XML EXPLICIT)
+	SET @xdocout = (SELECT * FROM #tempTable FOR XML PATH('WorkOrderCoreIDTO'), ROOT('ArrayOfWorkOrderCoreIDTO'))
+
+	PRINT CAST(@xdocout AS nvarchar(MAX))

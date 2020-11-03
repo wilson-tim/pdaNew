@@ -1,0 +1,82 @@
+declare @test integer;
+
+--execute @test = dbo.cs_wos_getSuffixes 'REF'
+--execute @test = dbo.cs_utils_getActions 'REFUSE', 1
+--execute @test = dbo.cs_task_getTasks 'REF', 0, 'REF'
+-- 19
+--execute @test = dbo.cs_sii_getItems '600510', 'ALL'
+-- 3
+--execute @test = dbo.cs_sii_getItems '600510', 'CLEANS'
+--4
+--execute @test = dbo.cs_sii_getItems '600510', 'REFUSE'
+
+execute @test = dbo.cs_keys_getServices
+
+--execute @test = dbo.cs_cont_getContracts 'REFUSE', '2010-01-01'
+
+--execute @test = dbo.cs_comptext_getNotes 0, NULL
+
+print str(@test);
+
+
+
+declare @test integer;
+	SELECT site_name_1
+		FROM site
+		WHERE site_ref = 'TEST';
+	SET @test = @@ROWCOUNT;
+	PRINT STR(@test);
+
+
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c
+
+execute dbo.cs_keys_getServices
+
+SELECT pda_lookup.service_c_desc
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	AND pda_lookup.service_c = 'TEST'
+
+
+			SELECT pda_lookup.comp_code_desc
+			FROM it_c, pda_lookup, allk
+			WHERE pda_lookup.comp_code = it_c.comp_code
+				AND allk.lookup_func = 'COMPLA'
+				AND allk.status_yn = 'Y'
+				AND allk.lookup_code = pda_lookup.comp_code
+				AND pda_lookup.comp_code = '3_7'
+
+
+	SELECT item.item_desc
+		FROM si_i
+		INNER JOIN item
+		ON item.item_ref = si_i.item_ref
+			AND item.customer_care_yn = 'Y'
+			AND RTRIM(LTRIM(item.service_c)) = @service_c
+		WHERE RTRIM(LTRIM(si_i.site_ref)) = @site_ref
+
+-- 09/01/2013
+-- {service:'refuse', site:'600497', item:'GREEN-BOX', faultcode:'0001', actioncode:'H', enteredby:'test'}
+
+execute cs_comp_createRecordCore
+	@entered_by = 'test',
+	@site_ref = '600497',
+	@service_c = 'refuse',
+	@comp_code = '0001',
+	@item_ref = 'GREEN-BOX',
+	@action_flag = 'H'
+
+
+
+
+	select * from comp
+	order by date_entered desc

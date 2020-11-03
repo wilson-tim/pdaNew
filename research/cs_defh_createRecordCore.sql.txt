@@ -1,0 +1,83 @@
+-- 21/01/2013
+
+/*
+** streetLength
+*/
+
+execute dbo.cs_sii_getItems '600510', 'REFUSE'
+-- item_type = 'REF'
+-- contract_ref = 'REF'
+-- priority_flag = 'A'
+
+execute cs_pdalookup_getFaultCodes 'REFUSE', 'BROWN-BIN', ''
+-- use fault code (comp_code) to select notice type
+
+select lookup_num
+	from allk
+	where lookup_func = 'DEFRN'
+	and lookup_code = 'R01'
+-- lookup_num = 1
+
+
+          select *
+          from defa
+		  inner join defp1
+		  on defp1.algorithm = defa.default_algorithm
+		  inner join pda_algorithm
+		  on pda_algorithm.algorithm = defa.default_algorithm
+          where defa.item_type = 'REF'
+          and   defa.notice_rep_no = '1'
+          and   defp1.default_level = '1'
+          and   defp1.item_type = 'REF'
+          and   defp1.contract_ref = 'REF'
+          and   defp1.priority = 'A'
+          and   pda_algorithm.item_type = 'REF'
+          and   pda_algorithm.contract_ref = 'REF'
+          and   pda_algorithm.priority = 'A'
+
+-- default_algorithm = 'REF_DOM'
+
+select * from defa
+select * from defp1
+select * from pda_algorithm
+
+/*
+
+Determine the default rectification algorithm
+---------------------------------------------
+Proposed sp to select algorithm:
+cs_defa_getAlgorithms passing parameters item_type, contract_ref, priority_flag [all from cs_sii_getItems], comp_code [from cs_pdalookup_getFaultCodes]
+
+If number of records found > 1 then prompt user to select
+If number of records found < 1 the warn user that there are no algorithms defined and rectification is not possible
+
+
+Determine the default rectification date and time
+-------------------------------------------------
+If defa.prompt_for_rectify <> 'N' (previous step) then prompt user to input a rectification date / time
+
+Proposed sp to select parameters for default date / time calculation:
+cs_defp4_getParams algorithm, rectification_level (= 1), item_type, contract_ref, priority_flag
+
+Default date / time calculated using defaultAlgBean.get_correct_by_dates( ... ) [business logic step?]
+
+
+Determine the volume, points, value
+-----------------------------------
+Prompt user for volume, points, and value
+  only if any of defa.prompt_for_points <> 'N' or defa.prompt_for_value <> 'N' 
+  [or this is not a re-rectification (not applicable for new rectifications!)] are true
+
+Proposed sp to select parameters for default points and value calculations:
+cs_defp3_getParams passing parameters algorithm, rectification_level (= 1 for new rectifications), item_type, contract_ref, priority_flag
+
+Default volume = 1
+Default total volume = 1
+Default points calculated using helperBean.getPoints( ... ) [business logic step?]
+Default value calculated using helperBean.getValue( ... ) [business logic step?]
+
+There are a number of validations of the rectification data at the end of this step if the user is being prompted for input, to be performed by the business logic; I still need to work through, check and confirm the details of these
+
+The next step will be a call to proposed sp cs_defh_createRecordCore
+
+*/

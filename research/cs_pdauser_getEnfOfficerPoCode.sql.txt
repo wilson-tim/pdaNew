@@ -1,0 +1,21 @@
+select * from pda_user
+select * from officers
+
+
+SELECT DISTINCT po_code AS code,
+		full_name AS [description]
+        FROM pda_user
+        WHERE po_code IN
+			(
+			SELECT lookup_code
+				FROM allk
+				WHERE lookup_func = 'ENFOFF'
+					AND status_yn = 'Y'
+			)
+			AND po_code IN
+			(
+			SELECT po_code
+				FROM pda_user
+				WHERE [user_name] = 'pda'
+			)
+		ORDER BY full_name;

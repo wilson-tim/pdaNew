@@ -1,0 +1,1607 @@
+<?xml version="1.0"?>
+<SqlWorkbenchSqlProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="SQL_layer">
+  <Items>
+    <LogicalFolder Name="Connections" Type="2" Sorted="true">
+      <Items>
+        <ConnectionNode Name="JARNILD\JARNILD_MSSQL:sa">
+          <Created>2013-10-03T10:26:32.7092432+01:00</Created>
+          <Type>SQL</Type>
+          <Server>JARNILD\JARNILD_MSSQL</Server>
+          <UserName>sa</UserName>
+          <Authentication>SQL</Authentication>
+          <InitialDB />
+          <LoginTimeout>15</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>TcpIp</ConnectionProtocol>
+          <ApplicationName>Microsoft SQL Server Management Studio - Query</ApplicationName>
+        </ConnectionNode>
+        <ConnectionNode Name="localhost:JARNILD\Tim">
+          <Created>2013-08-16T09:05:37.4560606+01:00</Created>
+          <Type>SQL</Type>
+          <Server>localhost</Server>
+          <UserName />
+          <Authentication>Windows Authentication</Authentication>
+          <InitialDB />
+          <LoginTimeout>0</LoginTimeout>
+          <ExecutionTimeout>0</ExecutionTimeout>
+          <ConnectionProtocol>NotSpecified</ConnectionProtocol>
+          <ApplicationName />
+        </ConnectionNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Queries" Type="0" Sorted="true">
+      <Items>
+        <FileNode Name="cs_agreement_getAgreementDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_agreement_getAgreementDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getEnfOfficers.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getEnfOfficers.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getEnfStatuses.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getEnfStatuses.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getFlyCapLandTypes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getFlyCapLandTypes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getFlyCapWasteTypes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getFlyCapWasteTypes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getJudgements.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getJudgements.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getLaws.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getLaws.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getNI195Grades.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getNI195Grades.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getNI195LandUses.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getNI195LandUses.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getNI195MeasurementMethods.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getNI195MeasurementMethods.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getOffences.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getOffences.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getPenalties.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getPenalties.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_getPleas.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_getPleas.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_allk_validateEnfStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_allk_validateEnfStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_attachments_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_attachments_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_attachments_getAttachments.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_attachments_getAttachments.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_avstatus_getStatuses.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_avstatus_getStatuses.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_avstatus_getStatusMessage.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_avstatus_getStatusMessage.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_avstatus_validateNextStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_avstatus_validateNextStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_bvtransect_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_bvtransect_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_bvtransect_getNI195Transects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_bvtransect_getNI195Transects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_colours_getColours.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_colours_getColours.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_closeRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_closeRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordAv.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordAv.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordDart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordDart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordGraff.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordGraff.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordCoreNonXML.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordCoreNonXML.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_createRecordEnf.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_createRecordEnf.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getCoreDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getCoreDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getCustCareRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getCustCareRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getDartDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getDartDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getEnforcementDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getEnforcementDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getGraffitiDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getGraffitiDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getHistory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getHistory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getLocalCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getLocalCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getLocalDart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getLocalDart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getLocalEnforcements.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getLocalEnforcements.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getLocalGraffiti.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getLocalGraffiti.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getLocalVehicles.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getLocalVehicles.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getMyCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getMyCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getMyDart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getMyDart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getMyEnforcements.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getMyEnforcements.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getMyGraffiti.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getMyGraffiti.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getMyVehicles.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getMyVehicles.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getRectificationDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getRectificationDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getVehicleDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getVehicleDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_getWorksOrderDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_getWorksOrderDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_searchEnforcements.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_searchEnforcements.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_searchVehicles.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_searchVehicles.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordAv.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordAv.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordDart.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordDart.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordDartDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordDartDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordEnf.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordEnf.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordGraff.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordGraff.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordGraffDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordGraffDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_updateRecordNI195.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_updateRecordNI195.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_viewEnfList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_viewEnfList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comp_viewHistory.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comp_viewHistory.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compavhist_getLastStatusRef.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compavhist_getLastStatusRef.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compavhist_updateStatus.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compavhist_updateStatus.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdart_getDartAbusiveBehaviour.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdart_getDartAbusiveBehaviour.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdart_getDartAswCategories.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdart_getDartAswCategories.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdart_getDartParaphernalia.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdart_getDartParaphernalia.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdart_getDartReportedCategories.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdart_getDartReportedCategories.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_getLookupCodeDescList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_getLookupCodeDescList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_getLookupCodeDescListSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_getLookupCodeDescListSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_getLookupCodeList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_getLookupCodeList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_getLookupCodeListSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_getLookupCodeListSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compdartdetail_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compdartdetail_updateRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compenf_getComplaintNoForSourceRef.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compenf_getComplaintNoForSourceRef.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiAbusiveBehaviour.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiAbusiveBehaviour.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiAmount.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiAmount.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiItem.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiItem.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiLevel.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiLevel.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiMaterial.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiMaterial.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiOffenceCount.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiOffenceCount.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiOffensive.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiOffensive.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiOperation.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiOperation.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiOwnership.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiOwnership.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiPreventativeAction.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiPreventativeAction.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiRemovalEquipment.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiRemovalEquipment.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiRemovalMethod.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiRemovalMethod.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiRemovalWorkforce.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiRemovalWorkforce.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compert_getGraffitiSurface.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compert_getGraffitiSurface.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_getLookupCodeDescList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_getLookupCodeDescList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_getLookupCodeDescListSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_getLookupCodeDescListSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_getLookupCodeList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_getLookupCodeList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_getLookupCodeListSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_getLookupCodeListSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compertdetail_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compertdetail_updateRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_compexternal_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_compexternal_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comptext_getNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comptext_getNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_comptext_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_comptext_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_cont_getContracts.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_cont_getContracts.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderlicences_deleteLicence.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderlicences_deleteLicence.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderlicences_getAllLicences.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderlicences_getAllLicences.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderlicences_getLicence.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderlicences_getLicence.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderlicences_insertLicence.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderlicences_insertLicence.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderlicences_updateLicence.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderlicences_updateLicence.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderusers_logoffUser.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderusers_logoffUser.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderusers_logonUser.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderusers_logonUser.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_contenderusers_noOfUsers.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_contenderusers_noOfUsers.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_customer_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_customer_updateRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_checkAlgorithms.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_checkAlgorithms.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_getAlgorithms.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_getAlgorithms.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_getDefaultCompletionDate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_getDefaultCompletionDate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_getDefaultPointsValue.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_getDefaultPointsValue.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_getDefaultVolume.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_getDefaultVolume.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defa_getPV.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defa_getPV.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defh_clearRectification.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defh_clearRectification.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defh_createRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defh_createRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defh_creditRectification.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defh_creditRectification.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defh_rerectifyRectification.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defh_rerectifyRectification.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_defh_updateRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_defh_updateRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_definb_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_definb_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_deft_checkReRectification.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_deft_checkReRectification.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfact_generateFpcnCheckDigit.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfact_generateFpcnCheckDigit.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfact_generateFpcnRef.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfact_generateFpcnRef.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfact_getActions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfact_getActions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfact_validateFpcnRef.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfact_validateFpcnRef.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfact_validateNextAction.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfact_validateNextAction.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfaction_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfaction_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfacttext_getNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfacttext_getNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfacttext_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfacttext_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfcompany_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfcompany_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfcompany_getCompanies.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfcompany_getCompanies.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfcompany_searchCompanies.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfcompany_searchCompanies.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfsuspect_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfsuspect_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfsuspect_getDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfsuspect_getDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfsuspect_searchSuspects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfsuspect_searchSuspects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfsustext_getNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfsustext_getNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_enfsustext_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_enfsustext_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_evidencetext_getNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_evidencetext_getNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_evidencetext_getNotesSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_evidencetext_getNotesSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_evidencetext_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_evidencetext_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_flyloads_getFlyCapLoadSize.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_flyloads_getFlyCapLoadSize.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_insplist_viewEnquiries.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_insplist_viewEnquiries.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_insplist_viewLocalEnquiries.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_insplist_viewLocalEnquiries.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_keys_checkNI195Grade.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_keys_checkNI195Grade.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_keys_getCField.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_keys_getCField.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_keys_getNField.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_keys_getNField.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_keys_getServices.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_keys_getServices.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_keys_getSystemKey.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_keys_getSystemKey.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_makes_getMakes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_makes_getMakes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_models_getModels.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_models_getModels.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_modulelic_getCheckkey.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_modulelic_getCheckkey.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_modulelic_getInstalled.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_modulelic_getInstalled.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_modulelic_getInstalledSP.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_modulelic_getInstalledSP.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_nationalholidays_getDescription.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_nationalholidays_getDescription.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pars_getScreenTitle.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pars_getScreenTitle.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdacoverlist_getAvailableOfficers.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdacoverlist_getAvailableOfficers.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdacoverlist_getOfficers.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdacoverlist_getOfficers.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdacoverlist_updateOfficerAvailability.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdacoverlist_updateOfficerAvailability.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdalookup_getFaultCodeDesc.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdalookup_getFaultCodeDesc.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdalookup_getFaultCodes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdalookup_getFaultCodes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdalookup_getNI195FaultCodes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdalookup_getNI195FaultCodes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdauser_checkUserLogin.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdauser_checkUserLogin.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_pdauser_getEnfOfficerPoCode.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_pdauser_getEnfOfficerPoCode.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_sii_getItems.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_sii_getItems.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_sii_getNI195RectificationInfo.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_sii_getNI195RectificationInfo.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_getLocalProperties.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_getLocalProperties.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_getLocalSites.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_getLocalSites.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_getLocalStreets.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_getLocalStreets.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_getPaArea.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_getPaArea.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_getPropertySortkey.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_getPropertySortkey.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_searchProperties.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_searchProperties.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_searchSites.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_searchSites.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_site_searchStreets.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_site_searchStreets.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_sitemark_getContractValue.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_sitemark_getContractValue.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_sno_getSerialNumber.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_sno_getSerialNumber.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_task_getTasks.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_task_getTasks.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_tradesite_getLocalBusinesses.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_tradesite_getLocalBusinesses.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_tradesite_searchBusinesses.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_tradesite_searchBusinesses.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_analysePropertyNumber.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_analysePropertyNumber.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_checkErrorMessagesXML.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_checkErrorMessagesXML.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_checkWorkingDay.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_checkWorkingDay.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_createBuildFileList.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_createBuildFileList.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_createStoredProcedureTemplate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_createStoredProcedureTemplate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_createUserDefinedFunctionTemplate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_createUserDefinedFunctionTemplate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getActions.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getActions.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getActionsCreate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getActionsCreate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getActionsLookup.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getActionsLookup.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getActionsUpdate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getActionsUpdate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getDependencyOrder.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getDependencyOrder.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getField.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getField.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_getServiceType.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_getServiceType.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_refreshAllObjects.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_refreshAllObjects.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_splitBuildNo.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_splitBuildNo.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_splitText.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_splitText.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_stringlistToTable.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_stringlistToTable.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_utils_wrapText.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_utils_wrapText.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_whiteboarddtl_getDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_whiteboarddtl_getDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_woalgs_getCompletionDate.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_woalgs_getCompletionDate.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_woh_createRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_woh_createRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_woh_updateRecordCore.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_woh_updateRecordCore.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_wohtxt_updateNotes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_wohtxt_updateNotes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_wos_getSuffixes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_wos_getSuffixes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_wostat_getDetails.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_wostat_getDetails.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_wostathist_createRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_wostathist_createRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="cs_wotype_getTypes.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>cs_wotype_getTypes.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_defh_getChangedRectifications.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>localhost</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>csis_defh_getChangedRectifications.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_defh_getRectifications.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>localhost</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>csis_defh_getRectifications.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_defh_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>csis_defh_updateRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_itl_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>csis_itl_updateRecord.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_woh_getChangedWorksOrders.sql">
+          <AssociatedConnectionMoniker>8c91a03d-f9b4-46c0-a305-b5dcc79ff907:localhost:True</AssociatedConnectionMoniker>
+          <AssociatedConnSrvName>localhost</AssociatedConnSrvName>
+          <AssociatedConnUserName />
+          <FullPath>csis_woh_getChangedWorksOrders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_woh_getWorksOrders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>csis_woh_getWorksOrders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_woh_readWorksOrders.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>csis_woh_readWorksOrders.sql</FullPath>
+        </FileNode>
+        <FileNode Name="csis_woh_updateRecord.sql">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>csis_woh_updateRecord.sql</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+    <LogicalFolder Name="Miscellaneous" Type="3" Sorted="true">
+      <Items>
+        <FileNode Name="_notes.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>_notes.txt</FullPath>
+        </FileNode>
+        <FileNode Name="_release.awk">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>_release.awk</FullPath>
+        </FileNode>
+        <FileNode Name="_release.cmd">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>_release.cmd</FullPath>
+        </FileNode>
+        <FileNode Name="Contender - Item Task to Fault Code Linking.pdf">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Contender - Item Task to Fault Code Linking.pdf</FullPath>
+        </FileNode>
+        <FileNode Name="Contender - Tasks, Suffixes, Types and Groups (121231).docx">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>Contender - Tasks, Suffixes, Types and Groups (121231).docx</FullPath>
+        </FileNode>
+        <FileNode Name="genero_add_def.4gl">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>genero_add_def.4gl</FullPath>
+        </FileNode>
+        <FileNode Name="genero_comp_utils.4gl">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>genero_comp_utils.4gl</FullPath>
+        </FileNode>
+        <FileNode Name="genero_complain.4gl">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>genero_complain.4gl</FullPath>
+        </FileNode>
+        <FileNode Name="genero_def_pnts.4gl">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>genero_def_pnts.4gl</FullPath>
+        </FileNode>
+        <FileNode Name="genero_def_reps.4gl">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>genero_def_reps.4gl</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_avstatus_getStatuses [Camden].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_avstatus_getStatuses [Camden].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_avstatus_getStatuses.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_avstatus_getStatuses.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_createRecordCore (validation).sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_createRecordCore (validation).sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_createRecordCore.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_createRecordCore.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_getHistory.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_getHistory.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_getMyVehicles.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_getMyVehicles.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_getRectificationDetails.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_getRectificationDetails.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_getVehicleDetails [Camden].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_getVehicleDetails [Camden].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_comp_getWorksOrderDetails.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_comp_getWorksOrderDetails.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_defa_checkAlgorithms.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_defa_checkAlgorithms.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_defa_getCorrectByDates.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_defa_getCorrectByDates.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_defa_getDefaultPointsValue.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_defa_getDefaultPointsValue.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_defa_getDefaultPointsValueDate.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_defa_getDefaultPointsValueDate.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_defh_createRecordCore.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_defh_createRecordCore.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_enfact_generateFpcnRef.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_enfact_generateFpcnRef.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_enfsuspect_createRecord.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_enfsuspect_createRecord.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_keys_getServices.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_keys_getServices.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_pdalookup_getFaultCodes.sql [2].txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_pdalookup_getFaultCodes.sql [2].txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_pdalookup_getFaultCodes.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_pdalookup_getFaultCodes.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_pdauser_getEnfOfficerPoCode.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_pdauser_getEnfOfficerPoCode.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_schema_sitedetail.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_schema_sitedetail.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_sii_getItems [Camden].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_sii_getItems [Camden].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_sii_getItems.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_sii_getItems.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_site_getLocalProperties.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_site_getLocalProperties.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_site_getLocalSites [Camden].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_site_getLocalSites [Camden].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_site_getPropertySortkey.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_site_getPropertySortkey.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_site_searchProperties.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_site_searchProperties.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_site_searchSites.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_site_searchSites.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_sno_getSerialNumber.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_sno_getSerialNumber.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_task_getTasks [2].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_task_getTasks [2].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_task_getTasks.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_task_getTasks.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_utils_checkWorkingDay.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_utils_checkWorkingDay.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_utils_wrapText.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_utils_wrapText.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research cs_woh_createRecordCore.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research cs_woh_createRecordCore.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research dbo.cs_utils_wrapText.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research dbo.cs_utils_wrapText.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research geographic searches.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research geographic searches.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research works order selections [Camden].sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research works order selections [Camden].sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="research xml parameters.sql.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>research xml parameters.sql.txt</FullPath>
+        </FileNode>
+        <FileNode Name="trader_io_extract.txt">
+          <AssociatedConnectionMoniker />
+          <AssociatedConnSrvName />
+          <AssociatedConnUserName />
+          <FullPath>trader_io_extract.txt</FullPath>
+        </FileNode>
+      </Items>
+    </LogicalFolder>
+  </Items>
+</SqlWorkbenchSqlProject>

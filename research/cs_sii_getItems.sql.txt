@@ -1,0 +1,83 @@
+execute dbo.cs_keys_getServices
+
+select * from modulelic
+
+select * from site where site-ref = '600510'
+
+-- 19
+execute dbo.cs_sii_getItems '600510', 'PDA', 'ALL'
+-- 3
+execute dbo.cs_sii_getItems '600510', 'PDA', 'CLEANS'
+-- 4
+execute dbo.cs_sii_getItems '600510', 'PDA', 'REFUSE'
+
+
+-- 19
+execute dbo.cs_sii_getItems '600510', 'ALL'
+-- 3
+execute dbo.cs_sii_getItems '600510', 'CLEANS'
+--4
+execute dbo.cs_sii_getItems '600510', 'REFUSE'
+
+
+-- sql stored procedures xml parameter
+-- http://stackoverflow.com/questions/3600091/how-to-pass-xml-from-c-sharp-to-a-stored-procedure-in-sql-server-2008
+-- http://stackoverflow.com/questions/3557882/stored-procedure-pass-xml-as-an-argument-and-insert-key-value-pairs/3558102#3558102
+
+-- http://stackoverflow.com/questions/209383/select-columns-from-result-set-of-stored-procedure
+-- http://ardalis.com/select-from-a-stored-procedure
+-- http://www.sommarskog.se/share_data.html
+
+-- sql for xml
+-- http://www.simple-talk.com/sql/learn-sql-server/using-the-for-xml-clause-to-return-query-results-as-xml/
+-- http://stackoverflow.com/questions/4751131/sql-for-xml-path-nested-results
+
+-- sql stored procedure to return xml
+-- http://www.sqlusa.com/bestpractices2005/multipleoutput/
+
+
+
+SELECT perm_items.item_ref
+						FROM perm_items, user_info, pda_user, patr
+						WHERE pda_user.user_name = 'PDA'
+							AND patr.po_code = pda_user.po_code
+							AND user_info.username = patr.po_login
+							AND perm_items.ugroup = user_info.ugroup
+
+
+-- Code from the PDA application:
+
+		SELECT DISTINCT si_i.item_ref,
+			item.item_desc,
+			si_i.feature_ref,
+			si_i.contract_ref,
+			item.service_c
+			FROM si_i, item
+			WHERE si_i.site_ref = @site_ref
+				AND item.item_ref = si_i.item_ref
+				AND item.item_ref NOT IN
+					(
+					SELECT perm_items.item_ref
+						FROM perm_items, user_info, pda_user, patr
+						WHERE pda_user.user_name = @user_name
+							AND patr.po_code = pda_user.po_code
+							AND user_info.username = patr.po_login
+							AND perm_items.ugroup = user_info.ugroup
+					)
+				AND item.customer_care_yn = 'Y'
+				AND item.service_c IN
+					(
+					SELECT DISTINCT service_c
+						FROM pda_lookup
+						WHERE role_name = dbo.cs_keys_getCField('ALL', 'PDA_INSPECTOR_ROLE')
+							AND service_c NOT IN
+								(
+									SELECT service_c
+										FROM @services
+										WHERE service_type = 'TRADE'
+								)
+					)
+			ORDER BY item.service_c, si_i.item_ref;
+
+
+

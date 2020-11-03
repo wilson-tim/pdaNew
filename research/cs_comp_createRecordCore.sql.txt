@@ -1,0 +1,92 @@
+DECLARE @tempText varchar(1024),
+	@textRow varchar(20),
+	@textPos integer;
+
+	SET @tempText = 'testing1 testing2 testing3 testing4 testing5 testing6 testing7 testing8';
+	--SET @tempText = 'The quick brown foxyloxy jumps over the lazy doggywoggy';
+	SET @tempText = 'Thequickbrownfoxloxyjumpsoverthelazydoggywoggy';
+
+	PRINT '@tempText  |' + @tempText + '|';
+	PRINT '';
+
+		WHILE DATALENGTH(@tempText) > 20
+		BEGIN
+			SET @textRow = SUBSTRING(@tempText, 1, 20);
+			SET @textPos = DATALENGTH(@textRow) - CHARINDEX(' ', REVERSE(@textRow)) + 1;
+			IF @textPos <= DATALENGTH(@textRow)
+			BEGIN
+				SET @textRow = SUBSTRING(@tempText, 1, @textPos);
+				SET @tempText = SUBSTRING(@tempText, (@textPos + 1), DATALENGTH(@tempText));
+				SET @textRow = RTRIM(@textRow);
+			END
+			ELSE
+			BEGIN
+				SET @tempText = SUBSTRING(@tempText, @textPos, DATALENGTH(@tempText));
+			END
+
+			PRINT '@textRow  |' + @textRow + '|';
+			PRINT STR(DATALENGTH(@textRow));
+			PRINT STR(CHARINDEX(' ', REVERSE(@textRow)));
+			PRINT STR(@textPos);
+			PRINT '@tempText |' + @tempText + '|';
+		END
+
+	IF DATALENGTH(@tempText) > 0
+	BEGIN
+		SET @textRow = RTRIM(@tempText);
+
+		PRINT '@textRow  |' + @textRow + '|';
+		PRINT STR(DATALENGTH(@textRow));
+		PRINT '';
+		PRINT '';
+		PRINT '@tempText ||';
+	END
+
+/* 31/12/2012 */
+
+DECLARE @tempText varchar(1024),
+	@textRow varchar(20),
+	@textPos integer;
+
+	SET @tempText = 'testing1 testing2 testing3 testing4 testing5 testing6 testing7 testing8';
+	--SET @tempText = 'The quick brown foxyloxy jumps over the lazy doggywoggy';
+	--SET @tempText = 'Thequickbrownfoxloxyjumpsoverthelazydoggywoggy';
+
+	PRINT '@tempText  |' + @tempText + '|';
+	PRINT '';
+
+		WHILE DATALENGTH(@tempText) > 20
+		BEGIN
+			SET @textRow = SUBSTRING(@tempText, 1, 20);
+			SET @textPos = CASE (CHARINDEX(' ', @textRow))
+								WHEN 0 THEN -1
+								ELSE DATALENGTH(@textRow) - CHARINDEX(' ', REVERSE(@textRow)) + 1
+							END;
+			IF @textPos = -1
+			BEGIN
+				SET @tempText = SUBSTRING(@tempText, 21, DATALENGTH(@tempText));
+			END
+			ELSE
+			BEGIN
+				SET @textRow = SUBSTRING(@tempText, 1, @textPos);
+				SET @tempText = SUBSTRING(@tempText, (@textPos + 1), DATALENGTH(@tempText));
+				SET @textRow = RTRIM(@textRow);
+			END
+
+			PRINT '@textRow  |' + @textRow + '|';
+			PRINT STR(DATALENGTH(@textRow));
+			PRINT STR(CHARINDEX(' ', REVERSE(@textRow)));
+			PRINT STR(@textPos);
+			PRINT '@tempText |' + @tempText + '|';
+		END
+
+	IF DATALENGTH(@tempText) > 0
+	BEGIN
+		SET @textRow = RTRIM(@tempText);
+
+		PRINT '@textRow  |' + @textRow + '|';
+		PRINT STR(DATALENGTH(@textRow));
+		PRINT '';
+		PRINT '';
+		PRINT '@tempText ||';
+	END

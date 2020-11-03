@@ -1,0 +1,60 @@
+-- sql insert intersect
+-- http://stackoverflow.com/questions/10760411/sql-intersect-conditional
+
+USE welshdata;
+EXECUTE dbo.cs_site_getLocalProperties 278891.00, 187038.20, 150
+
+EXECUTE dbo.cs_site_getLocalStreets 278891.00, 187038.20, 150
+
+SELECT * FROM locn WHERE location_name like UPPER('%ROAD%')
+SELECT * FROM locn order by location_name
+
+
+select site.site_name_1, * from site_detail
+left outer join site
+on site.site_ref = site_detail.site_ref
+where site.site_name_1 like '%BEECHWOOD ROAD%'
+order by easting,site.site_name_1
+
+
+select * from keys where keyname like '%HEADER'
+select * from keys where keyname like '%_SERVICE'
+
+
+		/* Using build_no or build_no_disp? */
+		select c_field
+        from keys
+        where service_c = 'ALL'
+        and   keyname = 'COMP_BUILD_NO_DISP'
+
+		SET @comp_build_no_disp = UPPER(RTRIM(cs_keys_getCField('ALL', 'COMP_BUILD_NO_DISP')));
+
+		Default to 'N' if NULL or ''
+
+		'Y' use build_no_disp
+		'N' use build_no
+
+		@location = UPPER(RTRIM(@location));
+
+		INNER JOIN site site3
+		ON site3.site_ref = site_detail.site_ref
+			AND site3.location_c IN
+				(SELECT location_c FROM locn WHERE location_name LIKE '%' + @location + '%')
+			AND @location IS NOT NULL
+
+			...build_no_disp...
+			...
+			AND @comp_build_no_disp = 'Y'
+
+			...build_no...
+			...
+			AND @comp_build_no_disp = 'N'
+
+
+select * from site where site_ref = '600510'
+select * from locn where location_c = '114'
+
+EXECUTE cs_site_searchSites '', '10', '', 'abbott'
+
+execute dbo.cs_site_searchProperties '', '', '', 'morf'
+execute dbo.cs_site_searchStreets 'sa13', '', '', ''

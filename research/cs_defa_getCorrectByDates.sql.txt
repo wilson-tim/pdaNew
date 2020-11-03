@@ -1,0 +1,53 @@
+declare @test datetime
+execute dbo.cs_defa_checkWorkingDay '2013-01-25', 'X', 'Y', 'YYYYYNN', @test OUTPUT
+print LTRIM(RTRIM(CONVERT(varchar(10), @test, 103)))
+
+select DATEDIFF(day, calendar_date, CAST('2013-01-28' AS datetime)), * from whiteboard_dtl
+
+insert into whiteboard_dtl
+(whiteboard_ref, seq, calendar_date, exclusion_yn)
+values
+(6, 1, '2013-01-28', 'Y')
+
+
+
+declare @test datetime
+execute dbo.cs_defa_checkWorkingDay '2013-01-28', 'X', 'Y', 'YYYYYNN', @test OUTPUT
+print LTRIM(RTRIM(CONVERT(varchar(10), @test, 103)))
+
+
+
+SELECT COUNT(*)
+					FROM whiteboard_dtl
+						WHERE LTRIM(RTRIM(CONVERT(varchar(8), calendar_date, 112))) = LTRIM(RTRIM(CONVERT(varchar(8), '2013-28-01', 112)))
+							AND exclusion_yn = 'Y';
+
+SELECT CONVERT(datetime, CONVERT(date, GETDATE()))
+
+Declare @DayOfMonth TinyInt Set @DayOfMonth = 13
+Declare @Month TinyInt Set @Month = 6
+Declare @Year Integer Set @Year = 2006
+Declare @Hour Integer Set @Hour = 12
+Declare @Minute Integer Set @Minute = 13
+-- ------------------------------------
+Select DateAdd(minute, @Minute,
+	DateAdd(hour, @Hour,
+	DateAdd(day, @DayOfMonth - 1, 
+	DateAdd(month, @Month - 1, 
+	DateAdd(year, @Year-1900, 0)))))
+
+
+
+Select DateAdd(minute, DATEPART(minute, GETDATE()),
+	DateAdd(hour, DATEPART(hour, GETDATE()),
+	DateAdd(day, DATEPART(day, GETDATE()) - 1, 
+	DateAdd(month, DATEPART(month, GETDATE()) - 1, 
+	DateAdd(year, DATEPART(year, GETDATE())-1900, 0)))))
+
+
+declare @time_delay decimal(6,2),
+	@time_delay_char char(7);
+
+SET @time_delay = 2;
+SET @time_delay_char = CONVERT(char(7), @time_delay);
+PRINT @time_delay_char;

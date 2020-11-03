@@ -1,0 +1,1 @@
+for %%f in (*.jsp) do unix2dos %%f

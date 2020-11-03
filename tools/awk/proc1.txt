@@ -1,0 +1,27 @@
+DECLARE @woi_serial_no integer
+,@wo_ref integer
+,@wo_suffix varchar(6)
+,@woi_no integer
+,@woi_site_ref varchar(16)
+,@woi_task_ref varchar(12)
+,@woi_feature_ref varchar(12)
+,@woi_item_ref varchar(12)
+,@woi_volume decimal(11,3)
+,@woi_item_price decimal(15,8)
+,@woi_line_total decimal(11,2)
+,@woi_comp_date datetime
+,@woi_act_comp datetime
+,@woi_text_flag varchar(1)
+,@del_build_no varchar(14)
+,@del_build_name varchar(60)
+,@del_addr1 varchar(100)
+,@del_addr2 varchar(100)
+,@allocation_ref varchar(20)
+,@payment_f varchar(1)
+,@woi_act_vol decimal(11,3)
+,@woi_act_price decimal(13,4)
+,@woi_act_line_total decimal(13,4)
+,@blank1 varchar(6)
+,@blank2 varchar(6)
+,@woi_buy_price decimal(15,8)
+,@woi_buy_value decimal(11,2)

@@ -1,0 +1,44 @@
+DECLARE @xdoc xml;
+SET @xdoc = 
+'<woi>
+	<woirow>
+		<task_ref>REF_DEL_240</task_ref>
+		<task_price>5.50</task_price>
+		<task_quantity>2.00</task_quantity>
+	</woirow>
+	<woirow>
+		<task_ref>REF_COL_240</task_ref>
+		<task_price>0.00</task_price>
+		<task_quantity>1.00</task_quantity>
+	</woirow>
+</woi>';
+
+SELECT T.N.value('task_ref[1]', 'varchar(12)') AS task_ref,
+	T.N.value('task_price[1]', 'decimal(8,3)') AS task_price,
+	T.N.value('task_quantity[1]', 'decimal(8,3)') AS task_quantity
+	FROM @xdoc.nodes('/woi/woirow') AS T(N);
+
+
+
+
+DECLARE @xdoc xml,
+	@xdocchar varchar(MAX);
+SET @xdoc = 
+'<?xml version="1.0" encoding="utf-8" ?>
+<WorkOrderCoreHDTO xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<TESTREF>123</TESTREF>
+                <Key xsi:nil="true" />
+                <Suffix>Test</Suffix>
+                <DateDue xsi:nil="true" />
+                <DateRaised xsi:nil="true" />
+                <EstVal xsi:nil="true" />
+                <ActVal xsi:nil="true" />
+</WorkOrderCoreHDTO>'
+
+SET @xdocchar = CAST(@xdoc AS varchar(MAX));
+PRINT @xdocchar;
+
+SELECT T.N.value('TESTREF[1]', 'varchar(12)') AS task_ref
+--	T.N.value('task_price[1]', 'decimal(8,3)') AS task_price,
+--	T.N.value('task_quantity[1]', 'decimal(8,3)') AS task_quantity
+	FROM @xdoc.nodes('/WorkOrderCoreHDTO') AS T(N);

@@ -1,0 +1,110 @@
+-- 17/01/2013
+
+execute dbo.cs_task_getTasks 'REF', 1, 'REF'
+
+-- UPPER(RTRIM(LTRIM(dbo.cs_keys_getCField('ALL', 'LINK_TASK_TO_WO_TYPE'))))
+select * from keys where keyname = 'LINK_TASK_TO_WO_TYPE'
+
+		SELECT DISTINCT ta_r.task_ref,
+			task.task_desc,
+			task.unit_of_meas,
+			task.unit_code,
+			task.task_code,
+			task.task_flag,
+			task.material_code,
+			task.wo_type_group
+--			ta_r.[start_date],
+--			ta_r.contractor_ref,
+--			ta_r.rate_band_code,
+--			ta_r.task_rate
+			FROM task, ta_r
+			WHERE task.task_ref = ta_r.task_ref
+				AND ta_r.rate_band_code = 'SELL'
+				AND ta_r.cont_cycle_no = 1
+				AND RTRIM(LTRIM(ta_r.contract_ref)) = 'REF'
+				AND (
+					(task.wo_type_group = '' and RTRIM(LTRIM(ta_r.contract_ref)) = 'REF')
+					OR (task.wo_type_group IS NULL and RTRIM(LTRIM(ta_r.contract_ref)) = 'REF')
+					)
+				AND task.task_ref NOT IN
+					(
+					SELECT task_ref 
+						FROM measurement_task
+						WHERE measurement_task.task_ref  = task.task_ref
+					)
+		ORDER BY ta_r.task_ref;
+
+
+              select distinct task.task_ref, task.task_desc,
+			ta_r.[start_date],
+			ta_r.contractor_ref,
+			ta_r.rate_band_code,
+ 			ta_r.task_rate
+              from task, ta_r
+              where task.task_ref = ta_r.task_ref
+              and ta_r.rate_band_code = 'SELL'
+              and ta_r.cont_cycle_no = 1
+              and ta_r.contract_ref = 'REF'
+
+	SELECT taskselection.task_ref
+		,taskselection.task_desc
+		,taskselection.unit_of_meas
+		,taskselection.unit_code
+		,taskselection.task_code
+		,taskselection.task_flag
+		,taskselection.material_code
+		,taskselection.wo_type_group
+		,taskselection.contract_ref
+		,taskselection.cont_cycle_no
+		,taskselection.[start_date]
+		,taskselection.contractor_ref
+		,taskselection.rate_band_code
+		,taskselection.task_rate
+		FROM
+		(
+		SELECT task.task_ref
+			,task.task_desc
+			,task.unit_of_meas
+			,task.unit_code
+			,task.task_code
+			,task.task_flag
+			,task.material_code
+			,task.wo_type_group
+			,ta_r.contract_ref
+			,ta_r.cont_cycle_no
+			,ta_r.[start_date]
+			,ta_r.contractor_ref
+			,ta_r.rate_band_code
+			,ta_r.task_rate
+			,rownumber = ROW_NUMBER() OVER
+				(
+				PARTITION BY ta_r.task_ref
+				ORDER BY ta_r.task_ref, ta_r.[start_date] DESC
+				)
+			FROM task
+			INNER JOIN ta_r
+			ON ta_r.task_ref = task.task_ref
+				AND ta_r.rate_band_code = 'SELL'
+				AND ta_r.cont_cycle_no = 1
+				AND ta_r.contract_ref = 'REF'
+			WHERE
+				(
+				(task.wo_type_group = '' and RTRIM(LTRIM(ta_r.contract_ref)) = 'REF')
+				OR (task.wo_type_group IS NULL and RTRIM(LTRIM(ta_r.contract_ref)) = 'REF')
+				)
+				AND ta_r.[start_date] <= GETDATE()
+		) AS taskselection
+		WHERE taskselection.rownumber = 1
+		ORDER BY taskselection.task_ref
+
+-- OK
+execute dbo.cs_keys_getSystemKey 'USE_BUSINESS_NAME', 'ALL'
+
+-- OK
+execute dbo.cs_keys_getSystemKey 'USE_BUSINESS_NAME'
+
+-- Valid service but no rows
+execute dbo.cs_keys_getSystemKey 'USE_BUSINESS_NAME', 'REFUSE'
+
+-- Invalid service
+execute dbo.cs_keys_getSystemKey 'USE_BUSINESS_NAME', 'REF'

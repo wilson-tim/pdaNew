@@ -1,0 +1,107 @@
+select dest_ref,* from comp
+	where action_flag='D'
+		and date_closed is null
+
+select * from defh where cust_def_no=35
+select * from defi where default_no=35
+select * from deft where default_no=35
+select * from defi_rect where default_no=35
+
+
+select defh.*, defi.*, joineddeft.*
+from defh
+inner join comp
+on comp.dest_ref=defh.cust_def_no
+left outer join defi
+on defi.default_no=defh.cust_def_no
+left outer join deft as joineddeft
+on joineddeft.default_no=35
+	and seq_no = 
+				(
+				SELECT MAX(seq_no)
+					FROM deft
+					WHERE default_no = joineddeft.default_no
+				)
+where comp.complaint_no=509
+
+
+select comp.complaint_no
+	,comp.comp_code
+	,(SELECT TOP(1) comp_code_desc FROM dbo.cs_pdalookup_getFaultCodesTable(comp.service_c, comp.item_ref, NULL) WHERE comp_code = comp.comp_code) AS comp_code_desc
+	,defh.site_ref
+	,joineddeft.item_ref
+	,defh.contract_ref
+	,joineddeft.priority_flag
+	,defi.default_algorithm
+	,defp1.algorithm_desc
+	,defi.volume
+	,joineddeft.points
+	,joineddeft.value
+	,DATEADD(minute, CAST(ISNULL(defi_rect.rectify_time_m, 0) AS integer),
+			DATEADD(hour,   CAST(ISNULL(defi_rect.rectify_time_h, 0) AS integer),
+			DATEADD(day,    DATEPART(day,   defi_rect.rectify_date) - 1, 
+			DATEADD(month,  DATEPART(month, defi_rect.rectify_date) - 1, 
+			DATEADD(year,   DATEPART(year,  defi_rect.rectify_date) - 1900, 0))))) AS rectify_datetime
+	,joineddeft.default_level
+	,joineddeft.default_occ
+	,defp1.cb_time_id
+	,defi_rect.rectify_date
+	,defi_rect.rectify_time_h
+	,defi_rect.rectify_time_m
+	,joineddeft.seq_no
+	/*
+	,defh.*
+	,defa.*
+	,defp1.*
+	,defi.*
+	,defi_rect.*
+	,joineddeft.*
+	*/
+from comp
+inner join defh
+on defh.cust_def_no=comp.dest_ref
+inner join defi
+on defi.default_no=defh.cust_def_no
+inner join deft as joineddeft
+on joineddeft.default_no=defh.cust_def_no
+	and joineddeft.seq_no =
+		(
+		SELECT MAX(seq_no)
+			FROM deft
+			WHERE default_no = defh.cust_def_no
+		)
+inner join defi_rect
+on defi_rect.default_no=defh.cust_def_no
+and defi_rect.seq_no = (
+		SELECT MAX(seq_no)
+			FROM deft
+			WHERE default_no = defh.cust_def_no
+		)
+inner join defa
+on defa.default_algorithm = defi.default_algorithm
+INNER JOIN defp1
+ON defp1.[algorithm] = defi.default_algorithm
+	and defp1.default_level = joineddeft.default_level
+	and priority_flag = joineddeft.priority_flag
+	and defp1.contract_ref = defh.contract_ref
+where comp.action_flag='D'
+	and comp.date_closed is null
+	and comp.dest_ref is not null
+--	and comp.complaint_no = 179
+	and comp.complaint_no = 509
+
+select dest_ref from comp where complaint_no=509
+select * from defh where cust_def_no=54
+select * from defi where default_no=54
+select * from defi_rect where default_no=54
+select * from deft where default_no=54
+select * from deft where default_no=54 and seq_no=3
+select * from deft where default_no=54 and seq_no=
+(SELECT MAX(seq_no)
+			FROM deft
+			WHERE default_no = 54)
+
+select * from defa where default_algorithm='REF_DOM'
+select * from defp1 where algorithm='REF_DOM'
+
+

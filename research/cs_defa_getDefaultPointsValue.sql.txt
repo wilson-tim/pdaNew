@@ -1,0 +1,48 @@
+DECLARE
+	@level integer,
+	@occ integer,
+	@points decimal(10,2),
+	@value decimal(10,2),
+	@cb_time_id integer,
+	@cdatetime datetime,
+	@new_cdatetime datetime
+
+SET @level = 1
+SET @occ = 1
+
+EXECUTE dbo.cs_defa_getDefaultPointsValue
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	'A',
+	'R01',
+	'REF_DOM',
+	1.00,
+	@level OUTPUT,
+	@occ OUTPUT,
+	@points OUTPUT,
+	@value OUTPUT,
+	@cb_time_id OUTPUT
+PRINT RTRIM(LTRIM(STR(@level)))
+PRINT RTRIM(LTRIM(STR(@occ)))
+PRINT RTRIM(LTRIM(CAST(@points AS varchar(12))))
+PRINT RTRIM(LTRIM(CAST(@value AS varchar(12))))
+PRINT RTRIM(LTRIM(STR(@cb_time_id)))
+
+SET @cdatetime = GETDATE()
+EXECUTE dbo.cs_defa_getDefaultCompletionDate
+	@cb_time_id,
+	'BROWN-BIN',
+	'REF',
+	@cdatetime,
+	@new_cdatetime OUTPUT;
+
+PRINT LTRIM(RTRIM(CONVERT(varchar(10), @new_cdatetime, 103)))
+
+
+select * from defp1
+where algorithm = 'REF_DOM'
+
+select * from defp2
+

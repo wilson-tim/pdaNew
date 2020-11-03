@@ -1,0 +1,20 @@
+execute dbo.cs_comp_getHistory '114S', 'SW_CRIME', NULL
+
+select * from comp
+
+DECLARE @item_ref varchar(12);
+
+SET @item_ref = NULL;
+
+SELECT complaint_no,
+			action_flag,
+			comp_code,
+			date_entered,
+			date_closed,
+			service_c,
+			site_ref,
+			item_ref
+		FROM comp
+        WHERE site_ref = '114S'
+			AND item_ref = ISNULL(@item_ref, item_ref)
+        ORDER BY date_entered DESC

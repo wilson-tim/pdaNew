@@ -1,0 +1,142 @@
+order:
+  /*
+     Calculate the street sequence sort key for a premise
+     Passed:
+        trader_ref
+        trader_rec
+  */
+
+  * Out of area flag
+  * Trader with no streets_ref is out of area
+  exarea = false$
+
+* v4.7  New test for <exarea>
+  area   = trader_rec<6>
+  exarea = xlate("AREAS", area, 5, "X")
+  
+* v4.7  Default to odd / even street number sequence - trader record might not have a street reference
+  mode = "O"
+
+  if not(exarea) then
+     * Obtain <number> and <house> from CONTACTS record
+     * Street number
+     number = trim(trader_rec<street_no$>)
+     number = fmt(number, "[TEXT,UC]")
+     * House name
+     house  = trim(trader_rec<house$>)
+     house  = fmt(house, "[TEXT,UC]")
+     contacts_id = trader_rec<28>
+     if contacts_io("R", contacts_id, contacts_rec) then
+        number = contacts_rec<21>
+        number = fmt(number, "[TEXT,UC]")
+        house  = ""
+        for i = 22 to 23
+           line = contacts_rec<i>
+           if len(line) then
+              house := line : @vm
+           end
+        next i
+        house[-1, 1] = ""
+        swap @vm with ", " in house
+        house  = fmt(house, "[TEXT,UC]")
+     end else
+        number = ""
+        house  = ""
+     end
+     
+     * Premise name
+     prem   = trim(trader_rec<premise_name$>)
+     prem   = fmt(prem, "[TEXT,UC]")
+   
+     if number ne "" then
+        field = number
+        gosub getnum
+        st_letter = letter2
+        st_number = numb
+     end else
+        st_letter = ""
+        st_number = ""
+     end
+   
+     if house ne "" then
+        field = house
+        gosub getnum
+        hs_letter = letter
+        hs_number = numb
+     end else
+        hs_letter = ""
+        hs_number = ""
+     end
+ 
+     begin case
+        case number eq "" and house eq ""
+           sort_key = "!"
+        case number eq ""
+           sort_key = "=!"
+        case st_number eq ""
+           sort_key = "=!"
+        case mode eq "C"
+           * Consecutive street number sequence
+           if num(st_number) then
+              sort_key = fmt(st_number, "R(0)#4") : "!"
+           end else
+              sort_key = st_number : "!"
+           end
+        case true$
+           * Odd/Even street number sequence - preceed with 0 or 1 accordingly
+           if num(st_number) then
+              sort_key = (1 - mod(st_number, 2)) : fmt(st_number, "R(0)#4") : "!"
+           end else
+              sort_key = st_number : "!"
+           end
+     end case
+
+     if num(hs_number) then
+        hs_number = fmt(hs_number, "R(0)#4")
+     end
+     sort_key := st_letter : "!" : hs_letter : "!" : hs_number : "!" : prem
+     transfer sort_key to answer
+  end else
+
+     answer = ""
+
+  end
+
+return
+
+getnum:
+
+  letter2 = ""
+
+  length = len(field)
+
+  for i1 = 1 to length
+     null
+  until num(field[i1, 1])
+  next i1
+
+  for i2 = 0 to length
+     null
+  while num(field[i2 + i1, 1]) and len(field[i2 + i1, 1])
+  next i2
+
+  for i3 = 0 to length
+     null
+  until num(field[length - i3, 1])
+  next i3
+
+  letter = field[-i3, i3]
+  xlet = letter
+  convert "ABCDEFGHIJKLMNOPQRSTUVWXYZ " to "" in xlet
+  * Handles any initial punctuation, eg 17A, ...
+  convert xlet to "" in letter
+  letter = trim(letter)
+  numb = field[i1 ,i2]
+  if numb ne "" and len(field(letter, " ", 1)) eq 1 then
+     * Handles any residual letter, eg 17A
+     letter2 = letter[1, 1]
+     letter[1, 1] = ""
+     letter = trim(letter)
+  end
+
+return

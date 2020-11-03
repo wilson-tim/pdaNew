@@ -1,0 +1,301 @@
+-- Full list of services (back office application)
+SELECT *
+	FROM keys
+	WHERE keys.keyname = 'HEADER'
+	ORDER BY keys.service_c
+
+-- Full list of services (mobile application)
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c;
+
+-- Services which can have configurable service names
+SELECT *
+	FROM keys
+	WHERE keys.service_c = 'ALL'
+	AND keys.keyname LIKE '%_SERVICE'
+	ORDER BY keys.keyname
+
+-- Services which can be licensed
+SELECT * from modulelic
+	ORDER BY keyname
+
+
+
+
+SELECT dbo.cspMakeCheckKey(keyname, exp_date), checkkey, dbo.cspCheckInstall(keyname), *
+	FROM modulelic
+	ORDER BY keyname
+GO
+
+SELECT keys.keyname, keys.c_field, modulelic.keyname, modulelic.description
+	FROM keys
+	LEFT OUTER JOIN modulelic
+	ON keys.c_field = modulelic.keyname
+	WHERE keys.service_c = 'ALL'
+	AND keys.keyname LIKE '%_SERVICE'
+	AND dbo.cspCheckInstall(modulelic.keyname) = 1
+	ORDER BY keys.keyname
+GO
+
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c;
+
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc,
+--	(SELECT keys.keyname FROM keys WHERE pda_lookup.service_c = keys.c_field AND keys.keyname LIKE '%_SERVICE' AND keys.keyname NOT LIKE 'BV199_%' AND keys.keyname NOT LIKE '% %'),
+	(SELECT modulelic.keyname FROM modulelic WHERE 
+	modulelic.keyname = 
+	dbo.cs_getField( (SELECT keys.keyname FROM keys WHERE pda_lookup.service_c = keys.c_field AND keys.keyname LIKE '%_SERVICE' AND keys.keyname NOT LIKE 'BV199_%' AND keys.keyname NOT LIKE '% %'), '_', 1 )
+	) AS service_type,
+	dbo.cspCheckInstall(
+		(SELECT modulelic.keyname FROM modulelic WHERE 
+	modulelic.keyname = 
+	dbo.cs_getField( (SELECT keys.keyname FROM keys WHERE pda_lookup.service_c = keys.c_field AND keys.keyname LIKE '%_SERVICE' AND keys.keyname NOT LIKE 'BV199_%' AND keys.keyname NOT LIKE '% %'), '_', 1 )
+	)
+	) AS installed
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c;
+
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc,
+--	keys2.keyname,
+	ISNULL((SELECT modulelic.keyname FROM modulelic WHERE 
+	modulelic.keyname = 
+	dbo.cs_getField( keys2.keyname, '_', 1 )
+	), 'CORE') AS service_type,
+	dbo.cs_checkInstall(
+		(SELECT modulelic.keyname FROM modulelic WHERE 
+	modulelic.keyname = 
+	dbo.cs_getField( keys2.keyname, '_', 1 )
+	)
+	) AS installed
+	FROM pda_lookup
+	LEFT OUTER JOIN keys keys2
+	ON pda_lookup.service_c = keys2.c_field
+		AND keys2.keyname LIKE '%_SERVICE'
+		AND keys2.keyname NOT LIKE 'BV199_%'
+		AND keys2.keyname NOT LIKE '% %'
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c;
+
+
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc,
+--	keys2.keyname,
+	ISNULL(modulelic.keyname, 'CORE') AS service_type,
+	dbo.cs_checkInstall(modulelic.keyname) AS installed
+	FROM pda_lookup
+	LEFT OUTER JOIN keys keys2
+	ON pda_lookup.service_c = keys2.c_field
+		AND keys2.keyname LIKE '%_SERVICE'
+		AND keys2.keyname NOT LIKE 'BV199_%'
+		AND keys2.keyname NOT LIKE '% %'
+	LEFT OUTER JOIN modulelic
+	ON modulelic.keyname = dbo.cs_getField(keys2.keyname, '_', 1)
+	LEFT OUTER JOIN keys keys3
+	ON keys3.service_c = 'ALL'
+		AND keys3.keyname = 'PDA_INSPECTOR_ROLE'
+	WHERE pda_lookup.role_name = keys3.c_field
+	ORDER BY pda_lookup.service_c;
+
+/*****************************************************************************
+** cs_getField user defined function
+**   passed   @rowdata = delimited data to be analysed
+**            @delim   = delimiter character
+**            @fieldno = 'field' number to be extracted  
+**   returned data from specified 'field' number
+**
+** 06/12/2012  TW  New
+**
+*****************************************************************************/
+IF (SELECT OBJECT_ID('cs_getField','FN')) IS NOT NULL
+BEGIN
+  DROP FUNCTION cs_getField
+END
+GO
+CREATE FUNCTION dbo.cs_getField
+(
+  @rowdata varchar(255),
+  @delim varchar(5),
+  @fieldno int
+)  
+RETURNS varchar(255)
+AS  
+BEGIN 
+    DECLARE @ctr int, @result varchar(255), @data varchar(255)
+	
+    SET @ctr = 1
+    SET @result = ''
+
+    WHILE (CHARINDEX(@delim, @rowdata)>0) AND @ctr <= @fieldno
+    BEGIN
+        SET @data = LTRIM(RTRIM(SUBSTRING(@rowdata, 1, CHARINDEX(@delim, @rowdata) - 1)))
+
+        SET @rowdata = SUBSTRING(@rowdata, CHARINDEX(@delim, @rowdata) + 1, LEN(@rowdata))
+      IF @ctr = @fieldno
+      BEGIN
+        SET @result = @data
+      END
+      SET @ctr = @ctr + 1
+    END
+	
+    SET @data = ltrim(rtrim(@rowdata))
+  IF @ctr = @fieldno
+  BEGIN
+    SET @result = @data
+  END
+
+  RETURN @result
+END
+
+GO
+
+
+
+
+IF OBJECT_ID (N'dbo.cspMakeCheckKey', N'FN') IS NOT NULL
+    DROP FUNCTION dbo.cspMakeCheckKey;
+GO
+CREATE FUNCTION dbo.cspMakeCheckKey(@keyname varchar(10), @expdate datetime)
+RETURNS integer
+AS
+/*
+** dbo.cspMakeCheckKey
+**   passed  @keyname = keyname
+**           @expdate - expiry date
+**   returns @checkkey = calculated checksum value
+**
+** 05/12/2012  TW  New
+**
+*/
+BEGIN
+	DECLARE @checkkey integer,
+	        @loopvar integer,
+	        @sitekey varchar(10),
+			@asciino integer;
+
+	IF @expdate IS NULL
+	BEGIN
+		SET @checkkey = 0;
+	END
+	ELSE
+	BEGIN
+		SET @checkkey = DATEDIFF(day, CAST('1899-12-31' AS DATETIME), @expdate);
+	END
+
+	SELECT @sitekey = c_field
+		FROM keys
+		WHERE service_c = 'ALL'
+		AND keyname = 'SITE_IDENT';
+
+	SET @loopvar = 0;
+	WHILE @loopvar < LEN(@sitekey)
+	BEGIN
+		SET @loopvar = @loopvar + 1;
+		SET @asciino = ASCII(SUBSTRING(@sitekey, @loopvar, 1));
+		SET @checkkey = (@checkkey + (@asciino * @loopvar)) % 100000;
+	END
+
+	SET @loopvar = 0;
+	WHILE @loopvar < LEN(@keyname)
+	BEGIN
+		SET @loopvar = @loopvar + 1;
+		SET @asciino = ASCII(SUBSTRING(@keyname, @loopvar, 1));
+		SET @checkkey = (@checkkey + (@asciino * @loopvar)) % 100000;
+	END
+
+	RETURN(@checkkey);
+END
+GO
+
+IF OBJECT_ID (N'dbo.cspCheckInstall', N'FN') IS NOT NULL
+    DROP FUNCTION dbo.cspCheckInstall;
+GO
+CREATE FUNCTION dbo.cspCheckInstall(@keyname varchar(500))
+RETURNS bit
+AS
+/*
+** dbo.cspCheckInstall
+**   passed  @keyname   = keyname
+**   returns @installed = true / false
+**
+** 05/12/2012  TW  New
+**
+*/
+BEGIN
+	DECLARE @installed bit,
+			@exp_date datetime,
+			@checkkey integer,
+			@calccheckkey integer;
+
+	SET @installed = 1
+
+	SELECT @exp_date = exp_date, @checkkey = checkkey
+		FROM modulelic
+		WHERE keyname = @keyname;
+
+	IF @@ROWCOUNT < 1
+	BEGIN
+		SET @installed = 0;
+	END
+
+	IF @installed = 1
+	BEGIN
+		IF @exp_date IS NULL
+		BEGIN
+			SET @installed = 0
+		END
+	END
+
+	IF @installed = 1
+	BEGIN
+		IF @exp_date < GETDATE()
+		BEGIN
+			SET @installed = 0
+		END
+	END
+
+	IF @installed = 1
+	BEGIN
+		IF @exp_date IS NULL
+		BEGIN
+			SET @installed = 0
+		END
+	END
+
+	IF @installed = 1
+	BEGIN
+		IF @checkkey IS NULL
+		BEGIN
+			SET @installed = 0
+		END
+	END
+
+	IF @installed = 1
+	BEGIN
+		SET @calccheckkey = dbo.cspMakeCheckKey(@keyname, @exp_date)
+		IF @calccheckkey <> @checkkey
+		BEGIN
+			SET @installed = 0
+		END
+	END
+
+	RETURN (@installed);
+END
+GO
+
+

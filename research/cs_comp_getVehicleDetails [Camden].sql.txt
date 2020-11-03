@@ -1,0 +1,27 @@
+declare @xmlCompAv xml
+
+SET @xmlCompAv = '<CustCareAVDTO><service_c>AV</service_c><site_ref>5097520</site_ref><entered_by>pda</entered_by><car_id>2DD</car_id><make_ref>931</make_ref><model_ref>1153</model_ref><colour_ref>29</colour_ref><date_stickered>2013-02-26T10:04:00</date_stickered><road_fund_valid>2013-02-20T00:00:00</road_fund_valid></CustCareAVDTO>'
+
+execute dbo.cs_comp_createRecordAv @xmlCompAv OUTPUT
+
+PRINT CAST(@xmlCompAv AS nvarchar(MAX)) 
+
+
+select * from comp where complaint_no = 1002804
+execute dbo.cs_comp_getVehicleDetails 1002804
+
+select * FROM cs_comp_viewHistory
+select * FROM comp_av  where complaint_no = 1002804
+select * FROM comp_av_hist  where complaint_no = 1002804
+
+execute dbo.cs_comp_getVehicleDetails 502775
+select * FROM comp  where complaint_no = 502775
+select * FROM comp_av  where complaint_no = 502775
+execute dbo.cs_comp_getVehicleDetails 1001150
+select * FROM comp  where complaint_no = 1001150
+select * FROM comp_av  where complaint_no = 100150
+select * from comp where service_c = 'AV' and (SELECT TOP(1) complaint_no FROM 
+comp_av where comp_av.complaint_no = comp.complaint_no) IS NOT NULL
+
+
+

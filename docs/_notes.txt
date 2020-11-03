@@ -1,0 +1,223 @@
+/*****************************************************************************
+** 05/12/2012
+*****************************************************************************/
+
+Why cs_...?
+cs stands for Contender Systems
+
+Research for cs_getServices.sql
+
+-- Full list of services (back office application)
+SELECT *
+	FROM keys
+	WHERE keys.keyname = 'HEADER'
+	ORDER BY keys.service_c
+
+-- Full list of services (mobile application)
+SELECT DISTINCT pda_lookup.service_c, pda_lookup.service_c_desc
+	FROM pda_lookup
+	WHERE pda_lookup.role_name = (SELECT keys.c_field
+		FROM keys
+		WHERE keys.service_c = 'ALL'
+			AND keys.keyname = 'PDA_INSPECTOR_ROLE')
+	ORDER BY pda_lookup.service_c;
+
+-- Services which can have configurable service names
+SELECT *
+	FROM keys
+	WHERE keys.service_c = 'ALL'
+	AND keys.keyname LIKE '%_SERVICE'
+	ORDER BY keys.keyname
+
+-- Services which can be licensed
+SELECT * from modulelic
+	ORDER BY keyname
+
+/*****************************************************************************
+** 07/12/2012
+*****************************************************************************/
+
+cs_site_getLocalProperties.sql and cs_site_getLocalStreets.sql
+
+Must have non-unique, non-clustered, ascending indexes on columns easting and northing
+
+/*****************************************************************************
+** 28/12/2012
+*****************************************************************************/
+
+Customer Care notes data
+
+Up to 500 lines of up to 60 characters
+
+Tables comp_text, defi_nb, wo_h_txt
+
+Also found wo_i_nb, diry_nb, insp_nb, note_book, note_book_h, history_txt,
+   evidence_text, enf_sus_text, enf_act_text, c_si_sched_text,
+   c_si_inps_text, c_si_remote_text, comp_text_import, insp_nb,
+   incident_text, client_text, referral_text, votd, vo_text, general_txt,
+   trees_text, weee_repair_text, whiteboard_txt
+(but these are not connected with Customer Care notes data)
+
+/*****************************************************************************
+** 31/12/2012
+*****************************************************************************/
+
+Creating a works order
+
+contract
+	get contract ref for current date
+
+	select cont.contract_ref, contract_name
+	from cont, c_da
+	where service_c = '<%= recordBean.getService_c() %>'
+	and cont.contract_ref = c_da.contract_ref
+	and period_start <= '<%= date %>'
+	and period_finish >= '<%= date %>'
+	order by contract_name
+
+	get cycle number for contract ref and current date
+
+	select cont_cycle_no
+	from c_da
+	where contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+	and period_start <= '<%= date %>'
+	and period_finish >= '<%= date %>'
+
+suffix
+	get suffix for contract ref
+
+	select wo_suffix
+	from wo_s
+	where contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+	order by wo_suffix
+
+	specific steps for defect and trees suffixes
+
+	check suffix count, is there only 1?
+
+	select count(distinct wo_suffix)
+	from wo_s
+	where contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+
+woType
+
+	Discussed with Fiona - could ignore limit_wo_type_by_suffix parameter
+	  and assume the 'Y' value processing in all cases
+
+	limit_wo_type_by_suffix = 'Y'
+
+    select wo_type.wo_type_f, wo_type.wo_type_desc
+    from wo_type, wo_s
+    where wo_type.contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+    and wo_s.wo_suffix = '<%= recordBean.getWo_suffix() %>'
+    and wo_type.contract_ref = wo_s.contract_ref
+    and wo_type.wo_type_f = wo_s.wo_type_f
+    order by wo_type.wo_type_desc
+
+	limit_wo_type_by_suffix != 'Y'
+
+    select wo_type.wo_type_f, wo_type.wo_type_desc
+    from wo_type
+    where wo_type.contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+    order by wo_type.wo_type_desc
+
+	check wo_type count, is there only 1?
+
+woTask
+
+	Discussed with Fiona - LINK_TASK_TO_WO_TYPE key is a get out
+	  for users who have an issue with the groups concept
+
+	select c_field from keys
+	where keyname = 'LINK_TASK_TO_WO_TYPE'
+	and service_c = 'ALL'
+
+	defect_tasks = ""
+
+	if defect works order
+
+	steps to assign defect_tasks
+
+	LINK_TASK_TO_WO_TYPE = 'Y'
+
+	select wo_type_group from wo_type
+	where wo_type_f = '<%= recordBean.getWo_type_f() %>'
+	and contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+
+	boolean wo_group_flag;
+	if (wo_type_group == null || wo_type_group == "") {
+		wo_group_flag = false;
+	} else {
+		wo_group_flag = true;
+	}
+
+	if wo_group_flag
+
+	select distinct ta_r.task_ref, task.task_desc
+	from task, ta_r
+	where task.task_ref = ta_r.task_ref
+	and ta_r.rate_band_code = 'SELL'
+	and ta_r.cont_cycle_no = '<%= recordBean.getCont_cycle_no() %>'
+	and (task.wo_type_group = '<%= wo_type_group %>'
+	or (task.wo_type_group = '' and ta_r.contract_ref = '<%= recordBean.getWo_contract_ref() %>')
+	or (task.wo_type_group is null and ta_r.contract_ref = '<%= recordBean.getWo_contract_ref() %>')
+	)
+	AND task.task_ref NOT IN (
+		SELECT task_ref 
+		FROM measurement_task
+		WHERE measurement_task.task_ref  = task.task_ref
+	)
+	<if:IfTrue cond='<%= ! defect_tasks.equals("") %>' >
+	AND task.task_ref NOT IN (<%= defect_tasks %>)
+	</if:IfTrue>
+	order by ta_r.task_ref
+
+	if not wo_group_flag
+
+    select distinct ta_r.task_ref, task.task_desc
+    from task, ta_r
+    where task.task_ref = ta_r.task_ref
+    and ta_r.rate_band_code = 'SELL'
+    and ta_r.cont_cycle_no = '<%= recordBean.getCont_cycle_no() %>'
+    and ta_r.contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+    AND task.task_ref NOT IN (
+        SELECT task_ref 
+        FROM measurement_task
+        WHERE measurement_task.task_ref  = task.task_ref
+    )
+    <if:IfTrue cond='<%= ! defect_tasks.equals("") %>' >
+    AND task.task_ref NOT IN (<%= defect_tasks %>)
+    </if:IfTrue>
+    order by ta_r.task_ref
+
+	LINK_TASK_TO_WO_TYPE != 'Y'
+
+	select distinct ta_r.task_ref, task.task_desc
+	from task, ta_r
+	where task.task_ref = ta_r.task_ref
+	and ta_r.rate_band_code = 'SELL'
+	and ta_r.cont_cycle_no = '<%= recordBean.getCont_cycle_no() %>'
+	and ta_r.contract_ref = '<%= recordBean.getWo_contract_ref() %>'
+	AND task.task_ref NOT IN (
+		SELECT task_ref 
+			FROM measurement_task
+			WHERE measurement_task.task_ref  = task.task_ref
+	)
+	<if:IfTrue cond='<%= ! defect_tasks.equals("") %>' >
+		AND task.task_ref NOT IN (<%= defect_tasks %>)
+	</if:IfTrue>
+	order by ta_r.task_ref
+
+woDetails
+
+/*****************************************************************************
+** 10/01/2013
+*****************************************************************************/
+
+List table structure information
+
+execute sp_help wo_h
+
+SELECT *
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'wo_h';

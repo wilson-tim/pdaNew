@@ -1,0 +1,34 @@
+execute dbo.cs_cont_getContracts 'REFUSE', NULL
+execute dbo.cs_wos_getSuffixes 'REF'
+execute dbo.cs_task_getTasks 'REF', 1, 'REF'
+
+execute dbo.cs_cont_getContracts 'CLEANS', NULL
+execute dbo.cs_wos_getSuffixes 'SC'
+execute dbo.cs_task_getTasks 'SC', 1, 'SC'
+
+
+
+		SELECT TOP (1) wo_type_group, *
+			FROM wo_type
+			WHERE contract_ref = 'REF'
+				AND wo_type_f IN
+					(
+					SELECT wo_type.wo_type_f
+						FROM wo_type, wo_s
+						WHERE wo_type.contract_ref = 'REF'
+							AND wo_s.wo_suffix = 'REF'
+							AND wo_type.contract_ref = wo_s.contract_ref
+							AND wo_type.wo_type_f = wo_s.wo_type_f
+					)
+			ORDER BY wo_type_desc;
+
+
+		SELECT TOP (1) wo_type_group, *
+			FROM wo_type, wo_s
+			WHERE wo_type.contract_ref = 'REF'
+				AND wo_s.wo_suffix = 'REF'
+							AND wo_type.contract_ref = wo_s.contract_ref
+							AND wo_type.wo_type_f = wo_s.wo_type_f
+					)
+			ORDER BY wo_type_desc;
+

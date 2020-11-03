@@ -1,0 +1,139 @@
+/* http://www.jasinskionline.com/technicalwiki/%28S%28wvw00ibwlzs5na45orv53qyl%29%29/Word-Wrapping-SQL-Server.ashx */
+
+/*
+declare @text varchar(MAX)
+
+SET @text = 'testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123456789 @!@' + CHAR(13) + CHAR(10) + 'hello world hello hello hello @!@' + CHAR(13) + CHAR(10) + 'testing testing 123 testing testing 1234 testing testing 1234 testing testing 1234 testing testing 1234 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123456789 '
+SET @text = @text + 'testingtesting123testingtesting123testingtesting123testingtesting123testingtesting123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123456789 @!@' + CHAR(13) + CHAR(10) + 'hello world hello hello hello @!@' + CHAR(13) + CHAR(10) + 'testing testing 123 testing testing 1234 testing testing 1234 testing testing 1234 testing testing 1234 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123 testing testing 123456789 '
+
+select * from dbo.cs_utils_wrapText(@text, 60)
+*/
+
+if object_id(N'dbo.cs_utils_wrapText', N'TF') is not null
+    drop function dbo.cs_utils_wrapText
+go
+create function dbo.cs_utils_wrapText
+    (
+     @InputText         varchar(MAX)
+    ,@MaxCharsPerLine   int
+    ) returns @t table (SubLineNum int, SubLineDesc varchar(1000))
+as begin
+
+/*--- Inits ---*/
+declare 
+     @doc       xml
+    ,@s         varchar(MAX)
+    ,@Delimiter varchar(2)
+
+declare
+     @WordList table (ID int identity(1,1), Word varchar(100))
+declare
+     @WordList2 table (ID int identity(1,1), Word varchar(100))
+declare @word varchar(100), @temptext varchar(100), @newword varchar(100)
+
+set @InputText = replace(@InputText, Char(13) + Char(10), '</v></x><x><v>|||</v></x><x><v>')
+
+select
+     @Delimiter     = ' ' 
+    ,@s             = replace(@InputText, '&', '&amp;')
+    ,@s             = '<x><v>' + replace(@s, @Delimiter, '</v></x><x><v>') + '</v></x>'
+    ,@doc           = convert(xml, @s)
+
+/*--- Load WordList table ---*/
+insert into 
+    @WordList (Word)
+select
+     v  = T.c.value('v[1]', 'varchar(100)')
+from
+    @doc.nodes('x') T(c)
+
+declare csr_wordlist cursor for
+	select word from @wordlist order by ID
+
+open csr_wordlist
+
+fetch next from csr_wordlist
+	into @word
+
+while @@FETCH_STATUS = 0
+begin
+	if len(@word) > @maxcharsperline
+	begin
+		set @temptext = @word
+		while len(@temptext) >= @maxcharsperline
+		begin
+			set @newword = LEFT(@temptext, @maxcharsperline)
+--			insert into @wordlist2 (word) values ('|||')
+			insert into @wordlist2 (word) values (@newword)
+			set @temptext = stuff(@temptext, 1, @maxcharsperline, '')
+		end
+		if len(@temptext) > 0
+		begin
+			insert into @wordlist2 (word) values (@temptext)
+		end
+	end
+	else
+	begin
+		insert into @wordlist2 (word) values (@word)
+	end
+	fetch next from csr_wordlist
+		into @word
+end
+
+close csr_wordlist
+deallocate csr_wordlist
+
+/*--- Build phrases ---*/
+;
+with MyData as (
+    /* base case */
+    select
+         ID
+        ,Word
+        ,NewLine    = 0
+        ,Phrase     = convert(varchar(1000), Word)
+        ,MaxId      = (select max(id) from @WordList2)
+    from 
+        @WordList2
+    where 
+        ID = 1
+
+    /* recursive case */
+    union all select
+         ID         = this.ID
+        ,Word       = this.word
+        ,NewLine    = case 
+						when this.Word = '|||' then 1
+						when len(this.Word) + 1 > @MaxCharsPerLine then 1
+						when len(prev.Phrase) + len(this.Word) + 1 > @MaxCharsPerLine then 1
+						else 0
+						end
+        ,Phrase     = convert(varchar(1000), case 
+						when this.Word = '|||' then ''
+						when len(this.Word) + 1 > @MaxCharsPerLine then this.Word
+                        when len(prev.Phrase) + len(this.Word) + 1 > @MaxCharsPerLine then this.Word
+                        else prev.Phrase + ' ' + this.word
+                        end)
+        ,MaxId      = prev.MaxId
+    from
+        @WordList2 this
+        inner join MyData prev
+            on this.id = prev.id + 1
+)
+
+/*--- Output Results ---*/
+insert into @T
+select 
+     SubLineNum     = row_number() over (order by this.ID)
+    ,SubLineDesc    = LTRIM(this.Phrase)
+from 
+    MyData this
+    left join MyData next
+        on this.id = next.id - 1
+where 
+    this.ID = this.MaxId
+    or next.NewLine = 1
+	option (maxrecursion 500)
+
+return
+end

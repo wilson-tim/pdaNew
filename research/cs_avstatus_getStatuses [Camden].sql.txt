@@ -1,0 +1,64 @@
+execute dbo.cs_avstatus_getStatuses 89107, 'NOPLATES'
+
+execute dbo.cs_avstatus_getStatuses 572292, 'N225JLM'
+
+execute dbo.cs_avstatus_getStatuses 1000104, 'NOPLATES'
+
+
+
+execute dbo.cs_avstatus_getStatuses 89107
+select * from comp_av where complaint_no = 89107
+select * from comp_av_hist where complaint_no = 89107 order by seq
+
+execute dbo.cs_avstatus_getStatuses 572292
+
+execute dbo.cs_avstatus_getStatuses 1000104
+
+execute dbo.cs_avstatus_getStatuses 104273
+execute dbo.cs_avstatus_getStatuses 89742
+
+
+
+
+select comp_av_hist.status_ref, comp_av.*, comp_av_hist.*
+from comp_av
+inner join comp_av_hist
+on comp_av_hist.complaint_no = comp_av.complaint_no
+	and comp_av_hist.seq = comp_av.last_seq
+	and comp_av_hist.status_ref <> 'CLOSED'
+
+execute dbo.cs_avstatus_getStatuses 1002789
+execute dbo.cs_comp_getVehicleDetails 1002789
+execute dbo.cs_comp_getVehicleDetails 135079
+
+execute dbo.cs_avstatus_getStatuses 136487
+execute dbo.cs_comp_getVehicleDetails 136487
+select * from comp_av where complaint_no = 136487
+select * from comp_av_hist where complaint_no = 136487
+
+execute dbo.cs_avstatus_getStatuses 126757
+execute dbo.cs_avstatus_getStatuses 87946
+execute dbo.cs_avstatus_getStatuses 314325
+
+select * from comp where complaint_no = 136475
+select * from comp_av where complaint_no = 136475
+
+
+select * from av_status
+
+
+select comp_av_hist.status_ref, comp_av.*, comp_av_hist.*
+from comp_av
+inner join comp_av_hist
+on comp_av_hist.complaint_no = comp_av.complaint_no
+	and comp_av_hist.seq = comp_av.last_seq
+	and comp_av_hist.status_ref = 'NFA'
+
+
+
+
+update comp_av_hist
+	set keeper_title = 'MR',
+		compl_name = 'TOM'
+	where complaint_no = 1002789
+		and status_ref = 'URGENT'

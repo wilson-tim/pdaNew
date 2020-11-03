@@ -1,0 +1,139 @@
+EXECUTE dbo.cs_site_searchProperties
+	'',
+	'',
+	'',
+	'bertha road'
+-- site ref 600473, 1 bertha road
+
+EXECUTE dbo.cs_sii_getItems
+	'600473',
+	'REFUSE'
+-- item_ref BROWN-BIN, feature_ref REF_DOM, contract_ref REF, service_c REFUSE, occur_day XTXXXXX, occur_week WEEK 2 & 4, pa_area 01, priority_flag A, volume 2.00, date_due 2010-02-23
+
+EXECUTE dbo.cs_pdalookup_getFaultCodes
+	'REFUSE',
+	'BROWN-BIN', ''
+-- comp_code R01
+
+EXECUTE dbo.cs_defa_checkAlgorithms
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	'A',
+	'R01',
+	1
+-- success
+
+EXECUTE dbo.cs_defa_getAlgorithms
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	'A',
+	'R01',
+	1
+-- item_type REF, algorithm REF_DOM
+
+DECLARE @volume decimal(10,2)
+EXECUTE dbo.cs_defa_getDefaultVolume
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	@volume OUTPUT
+PRINT RTRIM(LTRIM(CAST(@volume AS varchar(12))))
+-- volume 1.00
+
+DECLARE
+	@level integer = 1,
+	@occ integer = 1,
+	@points decimal(10,2),
+	@value decimal(10,2),
+	@datetime datetime
+
+SET @level = 1
+SET @occ = 1
+SET @datetime = GETDATE()
+--SET @datetime = CAST('2013-02-02' AS datetime)
+
+EXECUTE dbo.cs_defa_getDefaultPointsValueDate
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	'A',
+	'R01',
+	'REF_DOM',
+	1.00,
+	@level OUTPUT,
+	@occ OUTPUT,
+	@points OUTPUT,
+	@value OUTPUT,
+	@datetime OUTPUT
+PRINT STR(@level)
+PRINT STR(@occ)
+PRINT RTRIM(LTRIM(CAST(@points AS varchar(12))))
+PRINT RTRIM(LTRIM(CAST(@value AS varchar(12))))
+PRINT LTRIM(RTRIM(CONVERT(varchar(10), @datetime, 103)))
+
+
+
+SELECT * FROM defp4
+WHERE cb_time_id = 4
+
+UPDATE defp4
+SET working_week = 'YYYYNNN'
+WHERE cb_time_id = 4
+
+UPDATE defp4
+SET working_week = 'YYYYYNN'
+WHERE cb_time_id = 4
+
+SELECT defh.*, defi.* FROM defh, defi
+WHERE site_ref = '600473'
+	AND defi.default_no = defh.default_no
+
+
+
+DECLARE
+	@level integer,
+	@occ integer,
+	@points decimal(10,2),
+	@value decimal(10,2),
+	@cb_time_id integer,
+	@cdatetime datetime,
+	@new_cdatetime datetime
+
+SET @level = 1
+SET @occ = 1
+
+EXECUTE dbo.cs_defa_getDefaultPointsValue
+	'600473',
+	'BROWN-BIN',
+	'REF_DOM',
+	'REF',
+	'A',
+	'R01',
+	'REF_DOM',
+	1.00,
+	@level OUTPUT,
+	@occ OUTPUT,
+	@points OUTPUT,
+	@value OUTPUT,
+	@cb_time_id OUTPUT
+PRINT RTRIM(LTRIM(STR(@level)))
+PRINT RTRIM(LTRIM(STR(@occ)))
+PRINT RTRIM(LTRIM(CAST(@points AS varchar(12))))
+PRINT RTRIM(LTRIM(CAST(@value AS varchar(12))))
+PRINT RTRIM(LTRIM(STR(@cb_time_id)))
+
+SET @cdatetime = GETDATE()
+EXECUTE dbo.cs_defa_getDefaultCompletionDate
+	@cb_time_id,
+	'BROWN-BIN',
+	'REF',
+	@cdatetime,
+	@new_cdatetime OUTPUT;
+
+PRINT LTRIM(RTRIM(CONVERT(varchar(10), @new_cdatetime, 103)))

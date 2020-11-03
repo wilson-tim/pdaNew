@@ -1,0 +1,80 @@
+select * from site where site_ref = '600510'
+select * from locn where location_c = '114'
+
+EXECUTE cs_site_searchSites '', '10', '', 'abbott'
+EXECUTE cs_site_searchSites '', '1', '', ''
+
+execute dbo.cs_site_searchProperties '', '', '', 'morf'
+execute dbo.cs_site_searchProperties '1', '', '', ''
+execute dbo.cs_site_searchStreets 'sa13', '', '', ''
+
+
+
+execute dbo.cs_utils_createStoredProcedureTemplate cs_utils_analysePropertyNumber
+
+
+declare @var1 varchar(100),
+	@var2 varchar(100),
+	@var3 varchar(100);
+execute dbo.cs_utils_analysePropertyNumber
+--	'17A The Rose Garden',
+--	'17 The Rose Garden',
+--	'The Rose Garden',
+--	'17A',
+--	'17A,',
+--	'17, A,',
+--	'17,A,',
+--	'17A, The Rose Garden',
+	'17-18 ABCDEFG',
+	@var1 OUTPUT,
+	@var2 OUTPUT,
+	@var3 OUTPUT;
+
+PRINT @var1;
+PRINT @var2;
+PRINT @var3;
+
+
+
+PRINT STR( ISNUMERIC(',') )
+PRINT STR( ISNUMERIC('-') )
+
+
+PRINT STUFF('66', 1, 0, REPLICATE('0', 4 - LEN('66')))
+
+declare @test varchar(300);
+SET @test = dbo.cs_utils_analysePropertyNumber('41')
+PRINT @test
+
+
+select top (1000)
+	dbo.cs_site_getPropertySortkey(
+	ISNULL(locn.location_name,''), ISNULL(site.build_no,''), ISNULL(site.build_sub_no,''), ISNULL(site.build_name,''), ISNULL(site.build_sub_name,'')
+	) AS sortkey,
+	*
+from site
+LEFT OUTER JOIN locn
+ON locn.location_c = site.location_c
+WHERE site.site_c = 'P'
+ORDER BY sortkey
+
+
+select top (1000)
+	dbo.cs_site_getPropertySortkey(
+	locn.location_name, site.build_no, site.build_sub_no, site.build_name, site.build_sub_name
+	) AS sortkey,
+	*
+from site
+LEFT OUTER JOIN locn
+ON locn.location_c = site.location_c
+WHERE site.site_c = 'P'
+ORDER BY sortkey
+
+
+
+
+declare @test varchar(100);
+SET @test = dbo.cs_utils_getField('boo!!hooooo!!hoo', '!!', 3);
+print @test;
+
+

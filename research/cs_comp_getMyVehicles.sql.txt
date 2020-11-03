@@ -1,0 +1,57 @@
+-- 20/02/2013
+
+execute dbo.cs_comp_getLocalVehicles 278792.00, 187044.00, 400
+execute dbo.cs_comp_getMyVehicles 'pda'
+execute dbo.cs_comp_getVehicleDetails 177
+execute dbo.cs_comp_searchVehicles '','Fe','Din'
+
+-- 12/02/2013
+
+select * from pda_user
+select * from patr
+select * from patr_area
+select pa_area from comp
+select * from site_pa where pa_func = 'AV'
+
+SELECT *
+	FROM comp
+	WHERE site_ref IN
+		(SELECT site_ref FROM site_pa WHERE pa_func = 'AV')
+		AND service_c = 'AV'
+		AND date_closed IS NULL
+	ORDER BY complaint_no
+
+SELECT comp.*
+	FROM pda_user
+	INNER JOIN patr_area
+	ON patr_area.po_code = pda_user.po_code
+	INNER JOIN comp
+	ON comp.pa_area = patr_area.area_c
+		AND comp.service_c = 'AV'
+		AND comp.date_closed IS NULL
+	WHERE pda_user.[user_name] = 'pda'
+	ORDER BY comp.complaint_no
+
+SELECT comp.*
+	FROM comp
+	INNER JOIN pda_user
+	ON pda_user.[user_name] = 'pda'
+	INNER JOIN patr_area
+	ON patr_area.po_code = pda_user.po_code
+	WHERE comp.pa_area = patr_area.area_c
+	AND comp.service_c = 'AV'
+	AND comp.date_closed IS NULL
+
+SELECT comp_av.*, comp.*
+	FROM comp
+	INNER JOIN pda_user
+	ON pda_user.[user_name] = 'pda'
+	INNER JOIN patr_area
+	ON patr_area.po_code = pda_user.po_code
+	INNER JOIN comp_av
+	ON comp_av.complaint_no = comp.complaint_no
+	WHERE comp.pa_area = patr_area.area_c
+	AND comp.service_c = 'AV'
+	AND comp.date_closed IS NULL
+
+

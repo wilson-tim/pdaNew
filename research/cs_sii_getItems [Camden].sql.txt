@@ -1,0 +1,136 @@
+		SELECT DISTINCT si_i.item_ref,
+			item.item_desc,
+			si_i.feature_ref,
+			si_i.contract_ref,
+			item.service_c,
+			si_i.occur_day,
+			si_i.occur_week,
+			si_i.occur_month,
+			si_i.round_c,
+			si_i.pa_area,
+			si_i.priority_flag,
+			si_i.volume,
+			si_i.date_due,
+			feat.feature_desc,
+			item.item_type,
+			item.insp_item_flag
+/*
+			site_detail.building_stat,
+			allk.lookup_text
+			patr_area.po_code,
+			patr.po_name
+*/
+			FROM si_i
+			INNER JOIN item
+			ON item.item_ref = si_i.item_ref
+				AND item.contract_ref = si_i.contract_ref
+				AND item.customer_care_yn = 'Y'
+				AND RTRIM(LTRIM(item.service_c)) = 'CLEANS'
+			LEFT OUTER JOIN feat
+			ON feat.feature_ref = si_i.feature_ref
+/*
+			LEFT OUTER JOIN site_detail
+			ON site_detail.site_ref = si_i.site_ref
+			LEFT OUTER JOIN allk
+			ON allk.lookup_code = site_detail.building_stat
+				AND allk.lookup_func = 'SITEBG'
+			LEFT OUTER JOIN patr_area
+			ON patr_area.area_c = si_i.pa_area
+				AND patr_area.pa_site_flag = 'P'
+			LEFT OUTER JOIN patr
+			ON patr.po_code = patr_area.po_code
+				AND patr.po_code =
+					(SELECT pda_user.po_code FROM pda_user WHERE RTRIM(LTRIM(pda_user.[user_name])) = 'PDA')
+*/
+			WHERE RTRIM(LTRIM(si_i.site_ref)) = '5122170'
+			ORDER BY item.service_c, si_i.item_ref;
+
+
+
+		SELECT DISTINCT si_i.item_ref,
+			item.item_desc,
+			si_i.feature_ref,
+			si_i.contract_ref,
+			item.service_c,
+			si_i.occur_day,
+			si_i.occur_week,
+			si_i.occur_month,
+			si_i.round_c,
+			si_i.pa_area,
+			si_i.priority_flag,
+			si_i.volume,
+			si_i.date_due,
+			feat.feature_desc,
+			item.item_type,
+			item.insp_item_flag
+/*
+			site_detail.building_stat,
+			allk.lookup_text
+			patr_area.po_code,
+			patr.po_name
+*/
+			FROM si_i
+			INNER JOIN item
+			ON item.item_ref = si_i.item_ref
+				AND item.contract_ref = si_i.contract_ref
+				AND item.customer_care_yn = 'Y'
+			INNER JOIN pda_lookup
+			ON pda_lookup.role_name = 'pda-in'
+				  and pda_lookup.service_c <> 'TRADE'
+				  and pda_lookup.service_c = item.service_c
+			LEFT OUTER JOIN feat
+			ON feat.feature_ref = si_i.feature_ref
+/*
+			LEFT OUTER JOIN site_detail
+			ON site_detail.site_ref = si_i.site_ref
+			LEFT OUTER JOIN allk
+			ON allk.lookup_code = site_detail.building_stat
+				AND allk.lookup_func = 'SITEBG'
+			LEFT OUTER JOIN patr_area
+			ON patr_area.area_c = si_i.pa_area
+				AND patr_area.pa_site_flag = 'P'
+			LEFT OUTER JOIN patr
+			ON patr.po_code = patr_area.po_code
+				AND patr.po_code =
+					(SELECT pda_user.po_code FROM pda_user WHERE RTRIM(LTRIM(pda_user.[user_name])) = 'PDA')
+*/
+			WHERE RTRIM(LTRIM(si_i.site_ref)) = '5122170'
+			ORDER BY item.service_c, si_i.item_ref;
+
+
+
+select * from patr_area
+select * from pda_user where user_name = 'PDA'
+SELECT pda_user.po_code FROM pda_user WHERE RTRIM(LTRIM(pda_user.[user_name])) = 'PDA'
+select * from site where site_ref='5122170'
+select * from si_i
+
+select distinct si_i.item_ref, item.item_desc, si_i.feature_ref, si_i.contract_ref, item.service_c
+from si_i, item
+where si_i.site_ref = '5122170'
+and   item.item_ref = si_i.item_ref
+and   item.customer_care_yn = 'Y'
+and item.service_c = 'CLEANS'
+
+select distinct si_i.item_ref, item.item_desc, si_i.feature_ref, si_i.contract_ref, item.service_c
+from si_i, item
+where si_i.site_ref = '5122170'
+and   item.item_ref = si_i.item_ref
+and   item.customer_care_yn = 'Y'
+and item.service_c = 'DART'
+
+select distinct si_i.item_ref, item.item_desc, si_i.feature_ref, si_i.contract_ref, item.service_c
+from si_i, item
+where si_i.site_ref = '5122170'
+and   item.item_ref = si_i.item_ref
+and   item.customer_care_yn = 'Y'
+and item.service_c = 'GRAFF'
+
+select distinct si_i.item_ref, item.item_desc, si_i.feature_ref, si_i.contract_ref, item.service_c
+from si_i, item, pda_lookup
+where si_i.site_ref = '5122170'
+and   item.item_ref = si_i.item_ref
+and   item.customer_care_yn = 'Y'
+and pda_lookup.service_c = item.service_c
+and pda_lookup.service_c <> 'TRADE'
+

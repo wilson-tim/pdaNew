@@ -1,0 +1,261 @@
+-- 10/06/2013
+
+/* Camden
+SET @easting = 528814.00
+SET @northing = 184094.00
+SET @radius = 50
+*/
+
+-- 12/02/2013
+
+/* Welshdata
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+*/
+
+
+execute dbo.cs_comp_getLocalVehicles 278792,187044,350
+
+execute dbo.cs_site_getLocalProperties 278792,187044,200
+
+execute dbo.cs_site_getLocalStreets 278792,187044,200
+
+execute dbo.cs_site_getLocalSites 278792,187044,200
+
+-- 07/12/2012
+
+select site_detail.*, site.*
+from site_detail
+left outer join site
+on site.site_ref = site_detail.site_ref
+
+select * from site
+
+/*
+  http://www.ordnancesurvey.co.uk/oswebsite/support/knowledgebase/calculating-distances-using-national-grid-references.html
+  The number of digits in each Easting or Northing set indicates the precision.
+  If three digits, the result would be in kilometres,
+  four digits would give a result in units of 100 m,
+  five digits a result in units of 10 m,
+  and six digits a result in metres.
+*/
+
+DECLARE @easting_min decimal(10,2),
+        @easting_max decimal(10,2),
+		@northing_min decimal(10,2),
+        @northing_max decimal(10,2),
+		@easting decimal(10,2),
+        @northing decimal(10,2),
+		@radius decimal(10,2)
+
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+
+SET @easting_min = @easting - @radius
+SET @easting_max = @easting + @radius
+
+SET @northing_min = @northing - @radius
+SET @northing_max = @northing + @radius
+
+select site_detail.*, site.*
+from site_detail
+right outer join site
+on site.site_ref = site_detail.site_ref
+	and site.site_c = 'P'
+where site_detail.easting between @easting_min and @easting_max
+	and site_detail.northing between @northing_min and @northing_max
+order by site_detail.site_ref
+
+
+
+
+DECLARE @easting_min decimal(10,2),
+        @easting_max decimal(10,2),
+		@northing_min decimal(10,2),
+        @northing_max decimal(10,2),
+		@easting decimal(10,2),
+        @northing decimal(10,2),
+		@radius decimal(10,2)
+
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+
+SET @easting_min = @easting - @radius
+SET @easting_max = @easting + @radius
+
+SET @northing_min = @northing - @radius
+SET @northing_max = @northing + @radius
+
+select site_detail.*, site.*
+from site_detail
+right outer join site
+on site.site_ref = site_detail.site_ref
+	and site.site_c = 'P'
+where sqrt( ( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) ) <= @radius
+order by site_detail.site_ref
+
+
+
+DECLARE @easting_min decimal(10,2),
+        @easting_max decimal(10,2),
+		@northing_min decimal(10,2),
+        @northing_max decimal(10,2),
+		@easting decimal(10,2),
+        @northing decimal(10,2),
+		@radius decimal(10,2)
+
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+
+SET @easting_min = @easting - @radius
+SET @easting_max = @easting + @radius
+
+SET @northing_min = @northing - @radius
+SET @northing_max = @northing + @radius
+
+select site_detail.site_ref, site.site_name_1, site_detail.*, site.*
+from site_detail
+right outer join site
+on site.site_ref = site_detail.site_ref
+	and site.site_c = 'P'
+right outer join site site2
+on site2.site_ref = site_detail.site_ref
+	and site_detail.easting between @easting_min and @easting_max
+	and site_detail.northing between @northing_min and @northing_max
+where sqrt( ( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) ) <= @radius
+order by site_detail.site_ref
+
+
+
+
+-- easting and northing values are 6 digit plus two decimal places,
+-- i.e. accurate to 1 metre
+-- radius is in metres
+-- site_ref, site_name_1, site_distance
+
+DECLARE @easting_min decimal(10,2),
+        @easting_max decimal(10,2),
+		@northing_min decimal(10,2),
+        @northing_max decimal(10,2),
+		@easting decimal(10,2),
+        @northing decimal(10,2),
+		@radius decimal(10,2),
+		@comp_build_no_disp char(1),
+		@use_supersites char(1)
+
+--SET @easting = 533615.00
+--SET @northing = 165122.00
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 80
+
+SET @easting_min = @easting - @radius
+SET @easting_max = @easting + @radius
+
+SET @northing_min = @northing - @radius
+SET @northing_max = @northing + @radius
+
+-- Use build_no or build_no_disp?
+select @comp_build_no_disp = c_field
+        from keys
+        where service_c = 'ALL'
+        and   keyname = 'COMP_BUILD_NO_DISP'
+
+-- Use supersites?
+
+
+select site_detail.site_ref, site.site_name_1,
+	cast(sqrt( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) as decimal (10,2)) as site_distance,
+	site_detail.*, site.*, locn.*
+from site_detail
+right outer join site
+on site.site_ref = site_detail.site_ref
+	and site.site_c = 'P'
+right outer join site site2
+on site2.site_ref = site_detail.site_ref
+	and site_detail.easting between @easting_min and @easting_max
+	and site_detail.northing between @northing_min and @northing_max
+right outer join locn
+on locn.location_c = site.location_c
+where sqrt( ( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) ) <= @radius
+order by site.site_name_1
+
+
+
+
+
+-- 07/12/2012
+
+-- easting and northing values are 6 digit plus two decimal places,
+-- i.e. accurate to 1 metre
+-- radius is in metres
+-- site_ref, site_name_1, site_distance
+
+DECLARE @easting_min decimal(10,2),
+        @easting_max decimal(10,2),
+		@northing_min decimal(10,2),
+        @northing_max decimal(10,2),
+		@easting decimal(10,2),
+        @northing decimal(10,2),
+		@radius decimal(10,2),
+		@use_supersites char(1)
+
+-- Croydon database
+-- SET @easting = 533615.00
+-- SET @northing = 165122.00
+-- Welshdata database
+SET @easting = 278792.00
+SET @northing = 187044.00
+SET @radius = 100
+
+SET @easting_min = @easting - @radius
+SET @easting_max = @easting + @radius
+
+SET @northing_min = @northing - @radius
+SET @northing_max = @northing + @radius
+
+-- Use supersites?
+SET @use_supersites = RTRIM(dbo.cs_keys_getCField('ALL', 'GENERATE_SUPERSITES'));
+IF @use_supersites IS NULL
+BEGIN
+	SET @use_supersites = 'Y';
+END
+
+IF @use_supersites = 'Y'
+BEGIN
+	select site_detail.site_ref, site.site_name_1,
+		cast(sqrt( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) as decimal (10,2)) as site_distance
+	from site_detail
+	right outer join site
+	on site.site_ref = site_detail.site_ref
+		and site.site_status = 'L'
+		and site.site_ref not like '%S'
+		and site.site_ref not like '%G'
+	right outer join site site2
+	on site2.site_ref = site_detail.site_ref
+		and site_detail.easting between @easting_min and @easting_max
+		and site_detail.northing between @northing_min and @northing_max
+	where sqrt( ( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) ) <= @radius
+	order by site.site_name_1
+END
+ELSE
+BEGIN
+	select site_detail.site_ref, site.site_name_1,
+		cast(sqrt( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) as decimal (10,2)) as site_distance
+	from site_detail
+	right outer join site
+	on site.site_ref = site_detail.site_ref
+		and site.site_status = 'L'
+		and site.site_c = 'P'
+	right outer join site site2
+	on site2.site_ref = site_detail.site_ref
+		and site_detail.easting between @easting_min and @easting_max
+		and site_detail.northing between @northing_min and @northing_max
+	where sqrt( ( square(@easting - site_detail.easting) + square(@northing - site_detail.northing) ) ) <= @radius
+	order by site.site_name_1
+END
+GO

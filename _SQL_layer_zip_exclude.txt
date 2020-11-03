@@ -1,0 +1,4 @@
+.svn
+archive\*.7z
+release
+docs

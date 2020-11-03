@@ -1,0 +1,23 @@
+execute cs_pdalookup_getFaultCodes 'REFUSE', 'GREEN-BOX', ''
+
+
+execute cs_sii_getItems '600510', 'REFUSE'
+
+
+IF OBJECT_ID (N'dbo.cs_allk_getFaultCodes', N'P') IS NOT NULL
+    DROP PROCEDURE dbo.cs_allk_getFaultCodes;
+GO
+
+
+select * from pda_lookup
+
+
+
+				AND allk.lookup_func = 'COMPLA'
+				AND allk.status_yn = 'Y'
+				AND allk.lookup_code = pda_lookup.comp_code
+				AND allk.service_c = @service_c
+
+
+select * from allk where lookup_code = 'GB01'
+select * from pda_lookup

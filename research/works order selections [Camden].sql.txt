@@ -1,0 +1,11 @@
+execute dbo.cs_cont_getContracts 'AV', NULL
+
+execute dbo.cs_wos_getSuffixes 'AV'
+
+execute dbo.cs_wotype_getTypes 'AV'
+
+execute dbo.cs_task_getTasks 'AV', 1, 'AV', 'A', ''
+
+execute dbo.cs_task_getTasks 'AV', 1, 'AV', 'A', 'A03'
+
+select * from wo_algs_pa_area

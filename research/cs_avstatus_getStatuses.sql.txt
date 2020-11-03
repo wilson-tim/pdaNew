@@ -1,0 +1,112 @@
+select 
+	(select lookup_text from allk where lookup_func = 'AVTP' and
+			lookup_code = 'STATUS' and
+			lookup_num = a.lookup_num) AS status_ref,
+	a.lookup_text,
+	a.lookup_num,
+	(select lookup_text from allk where lookup_func = 'AVTP' and
+			lookup_code = 'CLASS' and
+			lookup_num = a.lookup_num) AS vehicle_class,
+	(select lookup_text from allk where lookup_func = 'AVTP' and
+			lookup_code = 'DEST' and
+			lookup_num = a.lookup_num) AS action_flag,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper
+	from allk a
+	RIGHT OUTER JOIN av_status
+	ON av_status.status_ref = (select lookup_text from allk where lookup_func = 'AVTP' and
+			lookup_code = 'STATUS' and
+			lookup_num = a.lookup_num)
+	where lookup_func = 'AVTP'
+		and	lookup_code = 'BTN'
+	order by lookup_num
+
+select * from av_status where status_ref = 'AVREP'
+
+
+select a.next_lookup_code,
+	av_status.description,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper,
+	av_status.officer,
+	(SELECT COUNT(*) FROM allk_avstat_link WHERE lookup_code = a.next_lookup_code) AS next_code_count,
+	NULL as lookup_num
+from allk_avstat_link a, av_Status
+where av_status.status_ref = a.next_lookup_code
+and lookup_code = 'AVREP'
+order by av_status.description
+
+select a.next_lookup_code,
+	av_status.description,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper,
+	av_status.officer,
+	(SELECT COUNT(*) FROM allk_avstat_link WHERE lookup_code = a.next_lookup_code) AS next_code_count,
+	NULL as lookup_num
+from allk_avstat_link a, av_Status
+where av_status.status_ref = a.next_lookup_code
+and lookup_code = '1STVIS'
+order by av_status.description
+
+select a.next_lookup_code,
+	av_status.description,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper,
+	av_status.officer,
+	(SELECT COUNT(*) FROM allk_avstat_link WHERE lookup_code = a.next_lookup_code) AS next_code_count,
+	NULL as lookup_num
+from allk_avstat_link a, av_Status
+where av_status.status_ref = a.next_lookup_code
+and lookup_code = 'SOFT'
+order by av_status.description
+
+select a.next_lookup_code,
+	av_status.description,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper,
+	av_status.officer,
+	(SELECT COUNT(*) FROM allk_avstat_link WHERE lookup_code = a.next_lookup_code) AS next_code_count,
+	NULL as lookup_num
+from allk_avstat_link a, av_Status
+where av_status.status_ref = a.next_lookup_code
+and lookup_code = 'SURREN'
+order by av_status.description
+
+select a.next_lookup_code,
+	av_status.description,
+	av_status.open_yn,
+	av_status.closed_yn,
+	av_status.keeper,
+	av_status.officer,
+	(SELECT COUNT(*) FROM allk_avstat_link WHERE lookup_code = a.next_lookup_code) AS next_code_count,
+	NULL as lookup_num
+from allk_avstat_link a, av_Status
+where av_status.status_ref = a.next_lookup_code
+and lookup_code = 'REMDES'
+order by av_status.description
+
+select allk_avstat_link.next_lookup_code, av_status.description
+from allk_avstat_link, av_Status
+where av_status.status_ref = allk_avstat_link.next_lookup_code
+and lookup_code = 'SURREN'
+order by av_status.description
+
+
+select *
+	from keys
+	where keyname = 'AV_TYPE_PROMPT'
+	
+update keys set c_field = 'N' where keyname = 'AV_TYPE_PROMPT' and service_c = 'ALL'
+execute dbo.cs_avstatus_getStatuses
+update keys set c_field = 'Y' where keyname = 'AV_TYPE_PROMPT' and service_c = 'ALL'
+execute dbo.cs_avstatus_getStatuses
+update keys set c_field = 'N' where keyname = 'AV_TYPE_PROMPT' and service_c = 'ALL'
+
+PRINT LTRIM(RTRIM(dbo.cs_keys_getCField('ALL', 'COMP_RECORD_TITLE')))
+
+select * from av_docs where status_ref = 'AVREP'

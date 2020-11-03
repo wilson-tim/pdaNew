@@ -1,0 +1,46 @@
+-- 21/01/2013
+
+execute dbo.cs_sii_getItems '600510', 'REFUSE'
+execute dbo.cs_pdalookup_getFaultCodes 'REFUSE', 'BROWN-BIN', NULL
+
+select * from keys where keyname = 'COMP CODE>ITEM LINK'
+select * from keys where keyname = 'COMP CODE>TASK LINK'
+select * from keys where keyname = 'COMP CODE>DEFRN LINK'
+select * from keys where keyname = 'LIST_COMP_CODES'
+
+select *
+	from allk, pda_lookup
+	where lookup_func = 'COMPLA'
+		and status_yn = 'Y'
+		and allk.lookup_code = pda_lookup.comp_code
+		and pda_lookup.role_name = 'pda-in'
+
+SELECT DISTINCT pda_lookup.comp_code,
+				pda_lookup.comp_code_desc,
+				pda_lookup.display_order
+			FROM it_c, pda_lookup, allk
+			WHERE RTRIM(LTRIM(it_c.item_ref)) = 'BROWN-BIN'
+				AND pda_lookup.comp_code = it_c.comp_code
+				AND RTRIM(LTRIM(pda_lookup.role_name)) = 'pda-in'
+				AND allk.lookup_code = pda_lookup.comp_code
+				AND allk.lookup_func = 'COMPLA'
+				AND allk.status_yn = 'Y'
+			ORDER BY pda_lookup.display_order, pda_lookup.comp_code
+
+SELECT DISTINCT pda_lookup.comp_code,
+				pda_lookup.comp_code_desc,
+				pda_lookup.display_order,
+				allk.lookup_func
+			FROM pda_lookup, allk
+			WHERE RTRIM(LTRIM(pda_lookup.role_name)) = 'pda-in'
+				AND allk.lookup_code = pda_lookup.comp_code
+				--AND allk.lookup_func = 'COMPLA'
+				AND allk.lookup_func = 'COMPLA'
+				AND allk.status_yn = 'Y'
+			ORDER BY pda_lookup.display_order, pda_lookup.comp_code
+
+select * from allk
+	where lookup_func = 'COMPLA'
+
+select * from allk
+	where lookup_func = 'DEFRN'

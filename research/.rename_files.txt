@@ -1,0 +1,8 @@
+ls research\ * | sed 's/research \(.*\)/mv "&" "\1"/' | sh
+
+# Generates and executes
+# mv "research cs_avstatus_getStatuses [Camden].sql.txt" "cs_avstatus_getStatuses [Camden].sql.txt"
+# etc.
+# before executing confirmed that the file names are not meaningful to the shell
+# and would not cause unwanted side effects
+# (i.e. being careful about treating data as code)

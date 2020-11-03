@@ -1,0 +1,23 @@
+select * from enf_act
+
+select * from keys where keyname = 'ENF_CHECK_DIGIT_CALC'
+print dbo.cs_keys_getCfield('ALL', 'ENF_CHECK_DIGIT_CALC')
+execute dbo.cs_keys_getSystemKey 'ALLOW_COMP_BACKDATE', 'ALL'
+execute dbo.cs_keys_getSystemKey 'BACKDATE_LIMIT', 'ALL'
+
+execute sp_help enf_act
+execute sp_help enf_action
+
+select * from enf_action
+select * from comp_enf
+
+select enf_action.action_ref, * from comp_enf
+inner join enf_action
+on enf_action.complaint_no  = comp_enf.complaint_no
+and enf_action.action_seq = comp_enf.action_seq
+
+select enf_action.action_ref, * from comp_enf
+left outer join enf_action
+on enf_action.complaint_no  = comp_enf.complaint_no
+and enf_action.action_seq = comp_enf.action_seq
+

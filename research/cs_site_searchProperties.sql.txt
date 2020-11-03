@@ -1,0 +1,143 @@
+	DECLARE @comp_build_no_disp char(1),
+			@use_supersites char(1),
+			@query varchar(2000),
+
+	@postcode varchar(8),
+	@buildingno varchar(14),
+	@buildingname varchar(100),
+	@location varchar(100);
+
+	SET @postcode = 'nw3'
+	SET @buildingno = '3'
+	SET @buildingname = 'garden'
+	SET @location = 'frognal'
+
+
+	SET @postcode     = RTRIM(LTRIM(@postcode));
+	SET @buildingno   = RTRIM(LTRIM(@buildingno));
+	SET @buildingname = RTRIM(LTRIM(@buildingname));
+	SET @location     = RTRIM(LTRIM(@location));
+
+	/* Using build_no or build_no_disp? */
+	SET @comp_build_no_disp = UPPER(RTRIM(dbo.cs_keys_getCField('ALL', 'COMP_BUILD_NO_DISP')));
+	IF @comp_build_no_disp IS NULL OR @comp_build_no_disp = ''
+	BEGIN
+		SET @comp_build_no_disp = 'N';
+	END
+
+	/* Using supersites? */
+	SET @use_supersites = UPPER(RTRIM(dbo.cs_keys_getCField('ALL', 'GENERATE_SUPERSITES')));
+	IF @use_supersites IS NULL OR @use_supersites = ''
+	BEGIN
+		SET @use_supersites = 'Y';
+	END
+
+	SET @query = 'SELECT site_detail.site_ref,
+						site.site_c,
+						site.site_name_1,
+						site.site_name_2,
+						site.build_sub_no,
+						site.build_no,
+						site.build_sub_no_disp,
+						site.build_no_disp,
+						site.build_sub_name,
+						site.build_name,
+						site.townname,
+						site.postcode,
+						locn.location_name,
+						locn.location_desc,
+						NULL AS site_distance,
+						(SELECT COUNT(*) FROM cs_comp_viewHistory WHERE cs_comp_viewHistory.site_ref = site.site_ref) AS history,
+						(dbo.cs_site_getPropertySortkey(locn.location_name, site.build_no, site.build_sub_no, site.build_name, site.build_sub_name)) AS site_sortkey
+					FROM site_detail
+					INNER JOIN site
+					ON site.site_ref = site_detail.site_ref
+						AND site.site_status = ''L''';
+
+	IF @use_supersites = 'Y'
+	BEGIN
+		SET @query = @query + ' AND (site.site_ref NOT LIKE ''%S'' AND site.site_ref NOT LIKE ''%G'')';
+	END
+	ELSE
+	BEGIN
+		SET @query = @query + ' AND site.site_c = ''P'''
+	END
+
+	SET @query = @query + ' INNER JOIN site site2 ON site.site_ref = site2.site_ref';
+
+	IF (@postcode IS NOT NULL) AND (@postcode <> '')
+	BEGIN
+		SET @query = @query +
+		' AND site2.postcode like ''%' + UPPER(@postcode) + '%''';
+		IF (@location = '') OR (@location IS NULL)
+		BEGIN
+			SET @query = @query + 
+				' LEFT OUTER JOIN locn ON site.location_c = locn.location_c';
+		END
+	END
+	IF (@buildingno IS NOT NULL) AND (@buildingno <> '') AND @comp_build_no_disp = 'Y'
+	BEGIN
+		SET @query = @query +
+		' AND (site2.build_no_disp like ''%' + UPPER(@buildingno) + '%''
+			OR site2.build_sub_no like ''%' + UPPER(@buildingno) + '%'')';
+		IF (@location = '') OR (@location IS NULL)
+		BEGIN
+			SET @query = @query + 
+				' LEFT OUTER JOIN locn ON site.location_c = locn.location_c';
+		END
+	END
+	IF (@buildingno IS NOT NULL) AND (@buildingno <> '') AND @comp_build_no_disp <> 'Y'
+	BEGIN
+		SET @query = @query +
+		' AND (site2.build_no like ''%' + UPPER(@buildingno) + '%''
+			OR site2.build_sub_no like ''%' + UPPER(@buildingno) + '%'')';
+		IF (@location = '') OR (@location IS NULL)
+		BEGIN
+			SET @query = @query + 
+				' LEFT OUTER JOIN locn ON site.location_c = locn.location_c';
+		END
+	END
+	IF (@buildingname IS NOT NULL) AND (@buildingname <> '')
+	BEGIN
+		SET @query = @query +
+		' AND (site2.build_name like ''%' + UPPER(@buildingname) + '%''
+			OR site2.build_sub_name like ''%' + UPPER(@buildingname) + '%'')';
+		IF (@location = '') OR (@location IS NULL)
+		BEGIN
+			SET @query = @query + 
+				' LEFT OUTER JOIN locn ON site.location_c = locn.location_c';
+		END
+	END
+	IF (@location IS NOT NULL) AND (@location <> '')
+	BEGIN
+		SET @query = @query +
+		' INNER JOIN locn
+		ON site.location_c = locn.location_c
+			AND locn.location_name like ''%' + UPPER(@location) + '%''';
+	END
+
+	SET @query = @query + ' ORDER BY site_c, site_sortkey';
+
+	print @query
+
+	EXECUTE (@query)
+
+/*
+site_ref
+site_name_1
+site_name_2
+site_c
+site_distance
+history
+site_sortkey
+build_sub_no
+build_no
+build_sub_no_disp
+build_no_disp
+build_sub_name
+build_name
+townname
+postcode
+location_name
+location_desc
+*/
